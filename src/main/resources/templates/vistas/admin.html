@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{plantillas/principal :: head}"></head>
+
+<body>
+    <header th:replace="~{plantillas/principal :: header}"></header>
+
+    <main class="container mt-5">
+        <div class="text-end mb-3">
+            <p class="fw-bold">Bienvenido, <span th:text="${usuario.nombre1}"></span></p>
+            <p class="rol-texto">Rol: <span th:text="${usuario.roles[0].nombre}"></span></p>
+        </div>
+
+        <div class="text-center">
+            <h2 class="text-danger">Panel de Administración</h2>
+            <p class="lead">Gestiona usuarios, productos y configuraciones del sistema.</p>
+        </div>
+
+        <div class="row mt-4">
+            <!-- Gestión de Usuarios -->
+            <div class="col-md-4">
+                <div class="card shadow-sm">
+                    <div class="card-body text-center">
+                        <i class="bi bi-people-fill fs-1 text-dark"></i>
+                        <h5 class="card-title mt-2">Usuarios</h5>
+                        <p class="card-text">Administra usuarios registrados.</p>
+                        <a th:href="@{/usuarios}" class="btn btn-outline-dark btn-sm">Gestionar usuarios</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Gestión de Productos (puede quedar como futuro) -->
+            <div class="col-md-4">
+                <div class="card shadow-sm">
+                    <div class="card-body text-center">
+                        <i class="bi bi-boxes fs-1 text-dark"></i>
+                        <h5 class="card-title mt-2">Productos</h5>
+                        <p class="card-text">Crea o edita productos del sistema.</p>
+                        <a href="#" class="btn btn-outline-dark btn-sm disabled">Próximamente</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Configuración -->
+            <div class="col-md-4">
+                <div class="card shadow-sm">
+                    <div class="card-body text-center">
+                        <i class="bi bi-sliders fs-1 text-dark"></i>
+                        <h5 class="card-title mt-2">Configuración</h5>
+                        <p class="card-text">Parámetros del sistema y roles.</p>
+                        <a href="#" class="btn btn-outline-dark btn-sm disabled">Próximamente</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer th:replace="~{plantillas/principal :: footer}"></footer>
+</body>
+
+</html>

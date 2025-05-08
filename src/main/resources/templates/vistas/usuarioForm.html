@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{plantillas/principal :: head}"></head>
+
+<body>
+    <header th:replace="~{plantillas/principal :: header}"></header>
+
+    <main class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card shadow">
+                    <div class="card-header text-center">
+                        <h4 th:text="${titulo}" class="text-primary"></h4>
+                    </div>
+                    <div class="card-body">
+                        <form th:action="@{/guardar}" th:object="${usuario}" method="post">
+                            <input type="hidden" th:field="*{id}" />
+
+                            <div class="mb-3">
+                                <label for="nombre" class="form-label">Nombre completo</label>
+                                <input type="text" th:field="*{nombre}" class="form-control" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="email" class="form-label">Correo electrónico</label>
+                                <input type="email" th:field="*{email}" class="form-control" required>
+                            </div>
+
+                            <div class="mb-3" th:if="${usuario.id == null}">
+                                <label for="password" class="form-label">Contraseña</label>
+                                <input type="password" th:field="*{password}" class="form-control" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="rol" class="form-label">Rol</label>
+                                <select th:field="*{rol}" class="form-select" required>
+                                    <option value="" disabled>Selecciona un rol</option>
+                                    <option value="ADMIN">ADMIN</option>
+                                    <option value="USER">USER</option>
+                                </select>
+                            </div>
+
+                            <div class="d-grid">
+                                <button type="submit" class="btn btn-primary">Guardar</button>
+                            </div>
+                        </form>
+
+                        <div class="mt-3 text-center">
+                            <a th:href="@{/usuarios}" class="btn btn-link text-secondary">Volver al listado</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer th:replace="~{plantillas/principal :: footer}"></footer>
+</body>
+
+</html>

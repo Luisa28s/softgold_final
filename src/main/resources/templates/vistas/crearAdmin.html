@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{plantillas/principal :: head}"></head>
+<script th:src="@{/js/crearAdmin.js}"></script>
+<script th:src="@{/js/registro.js}"></script>
+
+<body>
+    <header th:replace="~{plantillas/principal :: header}"></header>
+
+    <main class="container mt-5">
+        <h3>Crear nuevo administrador</h3>
+        <div id="alerta" class="d-none"></div>
+
+
+        <div th:if="${param.exito}" class="alert alert-success">
+            Perfil creado correctamente
+        </div>
+        <form method="POST" th:action="@{/super-admin/crear-admin}" th:object="${usuario}">
+
+            <div class="mb-3">
+                <label class="form-label">Tipo de documento</label>
+                <select class="form-control" th:field="*{tipoDocumento}" required>
+                    <option value="" disabled selected>Selecciona</option>
+                    <option value="Cédula de ciudadanía">Cédula de ciudadanía</option>
+                </select>
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Número de identificación</label>
+                <input type="number" th:field="*{id}" class="form-control" required>
+            </div>
+
+            <div class="mb-3">
+                <label>Primer Nombre</label>
+                <input type="text" th:field="*{nombre1}" class="form-control" required>
+            </div>
+
+            <div class="mb-3">
+                <label>Segundo Nombre</label>
+                <input type="text" th:field="*{nombre2}" class="form-control">
+            </div>
+
+            <div class="mb-3">
+                <label>Primer Apellido</label>
+                <input type="text" th:field="*{apellido1}" class="form-control" required>
+            </div>
+
+            <div class="mb-3">
+                <label>Segundo Apellido</label>
+                <input type="text" th:field="*{apellido2}" class="form-control">
+            </div>
+
+            <div class="mb-3">
+                <label class="form-label">Correo electrónico</label>
+                <input type="email" th:field="*{email}" class="form-control" required>
+                <div class="text-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">
+                </div>
+            </div>
+
+
+
+            <div class="mb-3">
+                <label class="form-label">Contraseña</label>
+                <div class="input-group">
+                    <input type="password" th:field="*{passwordPlano}" class="form-control"
+                        pattern="(?=.*[A-Z])(?=.*\d).{8,20}"
+                        title="Debe tener al menos 8 caracteres, una letra mayúscula y un número" required>
+                    <button class="btn btn-outline-secondary" type="button" id="togglePassword">
+                        <i class="bi bi-eye"></i>
+                    </button>
+                </div>
+                <div class="text-danger" th:if="${#fields.hasErrors('passwordPlano')}" th:errors="*{passwordPlano}">
+                </div>
+            </div>
+
+
+
+
+            <button type="submit" class="btn btn-success">Registrar administrador</button>
+            <a th:href="@{/super-admin}" class="btn btn-secondary ms-2">Cancelar</a>
+        </form>
+    </main>
+
+    <footer th:replace="~{plantillas/principal :: footer}"></footer>
+</body>
+
+</html>

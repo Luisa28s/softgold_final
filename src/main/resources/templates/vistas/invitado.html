@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{plantillas/principal :: head}"></head>
+
+<body>
+    <header th:replace="~{plantillas/principal :: header}"></header>
+
+    <main class="container mt-5">
+
+        <div class="text-end mb-4">
+            <p class="fw-bold">Bienvenido, <span th:text="${usuario.nombre}">Invitado</span></p>
+            <p class="text-muted">Rol: <span th:text="${usuario.rol}">INVITADO</span></p>
+        </div>
+
+        <div class="text-center">
+            <h2 class="text-success">Panel de Invitado</h2>
+            <p class="lead">Acceso limitado para visualizar información básica.</p>
+        </div>
+
+        <div class="row mt-4 justify-content-center">
+            <div class="col-md-6">
+                <div class="card shadow-sm">
+                    <div class="card-body text-center">
+                        <i class="bi bi-eye-fill fs-1 text-success"></i>
+                        <h5 class="card-title mt-2">Ver catálogo</h5>
+                        <p class="card-text">Explora productos o servicios sin iniciar sesión completa.</p>
+                        <a href="/catalogo" class="btn btn-outline-success btn-sm">Ir al catálogo</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <footer th:replace="~{plantillas/principal :: footer}"></footer>
+</body>
+
+</html>

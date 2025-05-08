@@ -1,0 +1,135 @@
+/* Validación en tiempo real */
+.valido {
+    border-color: #198754 !important;
+    box-shadow: 0 0 0 0.2rem rgba(25, 135, 84, 0.25);
+}
+
+.invalido {
+    border-color: #dc3545 !important;
+    box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25);
+}
+
+/* Campo de búsqueda rápida */
+#busquedaRapida input {
+    width: 300px;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
+    border-radius: 0.375rem;
+    background-color: #fff;
+    border: 1px solid #ced4da;
+}
+
+/* Temporizador inactividad */
+#temporizador {
+    position: fixed;
+    bottom: 1rem;
+    right: 1rem;
+    background-color: #f8f9fa;
+    border: 1px solid #dee2e6;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    box-shadow: 0 0.25rem 0.75rem rgba(0,0,0,0.1);
+    z-index: 1050;
+    font-weight: bold;
+    color: #6c757d;
+}
+
+/* Íconos en input */
+.input-group .form-control:focus + .btn {
+    border-color: #86b7fe;
+}
+
+#resultadosBusqueda {
+    max-height: 200px;
+    overflow-y: auto;
+    width: 100%;
+    background-color: white;
+    border: 1px solid #ccc;
+    z-index: 1056;
+}
+
+#resultadosBusqueda .list-group-item {
+    cursor: pointer;
+}
+
+/* Tema claro (por defecto) */
+:root {
+    --bg-color: #ffffff;
+    --text-color: #000000;
+    --card-bg: #f8f9fa;
+    --navbar-bg: #e3f2fd;
+    --text-secondary: #6c757d;
+}
+
+/* Tema oscuro */
+body.tema-oscuro {
+    --bg-color: #121212;
+    --text-color: #ffffff;
+    --card-bg: #1e1e1e;
+    --navbar-bg: #333333;
+    --text-secondary: #b0b0b0;
+}
+
+/* Aplicación de variables */
+body {
+    background-color: var(--bg-color);
+    color: var(--text-color);
+}
+
+.card,
+.card-header,
+.card-body {
+    background-color: var(--card-bg);
+    color: var(--text-color);
+}
+
+.navbar {
+    background-color: var(--navbar-bg) !important;
+}
+
+body.tema-oscuro a {
+    color: #90caf9;
+}
+body.tema-oscuro a:hover {
+    color: #bbdefb;
+    text-decoration: underline;
+}
+/* Otros fondos específicos por rol */
+body.admin {
+    background-color: #f3f3f3;
+}
+
+body.usuario {
+    background-color: #ffffff;
+}
+
+.form-text {
+    color: var(--text-secondary) !important;
+}
+
+#resultadosBusqueda {
+    background-color: var(--card-bg);
+    border: 1px solid #ccc; /* O ajustalo con una nueva variable si querés */
+}
+
+#resultadosBusqueda .list-group-item {
+    background-color: var(--card-bg);
+    color: var(--text-color);
+}
+
+.rol-texto {
+    color: var(--text-color);
+    font-weight: bold;
+}
+
+.footer {
+    background-color: var(--card-bg);
+    color: var(--text-color);
+    border-top: 1px solid rgba(255, 255, 255, 0.1); /* opcional en oscuro */
+}
+
+body.tema-oscuro .navbar-toggler-icon {
+    background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='white' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+}
+
+

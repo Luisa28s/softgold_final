@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{plantillas/principal :: head}"></head>
+
+<body class="bg-danger-subtle">
+    <header th:replace="~{plantillas/principal :: header}"></header>
+
+    <div class="container text-center mt-5">
+        <div class="card mx-auto shadow p-4" style="max-width: 600px;">
+            <h2 class="text-danger">⚠️ Tu cuenta ha sido bloqueada</h2>
+            <p class="lead">Has superado el número máximo de intentos fallidos.</p>
+            <p>Podrás volver a intentarlo después de 15 minutos o revisa tu correo electrónico para desbloquear tu
+                cuenta.</p>
+            <a th:href="@{/login}" class="btn btn-outline-primary mt-3">Volver al login</a>
+        </div>
+    </div>
+
+    <footer th:replace="~{plantillas/principal :: footer}"></footer>
+</body>
+
+
+</html>
