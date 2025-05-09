@@ -39,8 +39,6 @@ public class SecurityConfig {
                                 .permitAll()
                                 .requestMatchers("/admin/**").hasRole("ADMINISTRADOR")
                                 .requestMatchers("/usuario/**").hasRole("USUARIO")
-                                .requestMatchers("/invitado/**").hasRole("INVITADO")
-                                .requestMatchers("/super-admin/**").hasRole("SUPERADMIN")
                                 .anyRequest().authenticated())
                                 .formLogin(form -> form
                                                 .loginPage("/login")

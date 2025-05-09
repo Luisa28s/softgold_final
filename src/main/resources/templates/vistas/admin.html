@@ -18,38 +18,28 @@
         </div>
 
         <div class="row mt-4">
-            <!-- Gestión de Usuarios -->
-            <div class="col-md-4">
+            <!-- Gestión de Mineros -->
+            <div class="col-md-6">
                 <div class="card shadow-sm">
                     <div class="card-body text-center">
-                        <i class="bi bi-people-fill fs-1 text-dark"></i>
-                        <h5 class="card-title mt-2">Usuarios</h5>
-                        <p class="card-text">Administra usuarios registrados.</p>
-                        <a th:href="@{/usuarios}" class="btn btn-outline-dark btn-sm">Gestionar usuarios</a>
+                        <i class="bi bi-person-lines-fill fs-1 text-dark"></i>
+                        <h5 class="card-title mt-2">Mineros</h5>
+                        <p class="card-text">Administra los usuarios con rol de minero.</p>
+                        <a th:href="@{/admin/usuarios/mineros}" class="btn btn-outline-dark btn-sm">Gestionar
+                            mineros</a>
                     </div>
                 </div>
             </div>
 
-            <!-- Gestión de Productos (puede quedar como futuro) -->
-            <div class="col-md-4">
+            <!-- Gestión de Empleados -->
+            <div class="col-md-6">
                 <div class="card shadow-sm">
                     <div class="card-body text-center">
-                        <i class="bi bi-boxes fs-1 text-dark"></i>
-                        <h5 class="card-title mt-2">Productos</h5>
-                        <p class="card-text">Crea o edita productos del sistema.</p>
-                        <a href="#" class="btn btn-outline-dark btn-sm disabled">Próximamente</a>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Configuración -->
-            <div class="col-md-4">
-                <div class="card shadow-sm">
-                    <div class="card-body text-center">
-                        <i class="bi bi-sliders fs-1 text-dark"></i>
-                        <h5 class="card-title mt-2">Configuración</h5>
-                        <p class="card-text">Parámetros del sistema y roles.</p>
-                        <a href="#" class="btn btn-outline-dark btn-sm disabled">Próximamente</a>
+                        <i class="bi bi-briefcase-fill fs-1 text-dark"></i>
+                        <h5 class="card-title mt-2">Empleados</h5>
+                        <p class="card-text">Administra los usuarios con rol de empleado.</p>
+                        <a th:href="@{/admin/usuarios/empleados}" class="btn btn-outline-dark btn-sm">Gestionar
+                            empleados</a>
                     </div>
                 </div>
             </div>

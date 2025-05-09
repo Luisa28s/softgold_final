@@ -8,12 +8,10 @@ import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 
 import java.util.Collections;
-import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -44,9 +42,14 @@ public class LoginController {
 
     @GetMapping("/login")
     public String mostrarFormularioLogin(
-            @RequestParam(value = "registroExitoso", required = false) String registroExitoso, Model model) {
-        if (registroExitoso != null) {
-            model.addAttribute("mensaje", "Registro exitoso. Ahora puedes iniciar sesión.");
+            @RequestParam(value = "error", required = false) String error,
+            @RequestParam(value = "logout", required = false) String logout,
+            Model model) {
+        if (error != null) {
+            model.addAttribute("error", "Credenciales incorrectas. Inténtalo de nuevo.");
+        }
+        if (logout != null) {
+            model.addAttribute("mensaje", "Has cerrado sesión correctamente.");
         }
         return "vistas/login";
     }
@@ -156,5 +159,4 @@ public class LoginController {
     public String cuentaBloqueada() {
         return "vistas/cuentaBloqueada";
     }
-
 }

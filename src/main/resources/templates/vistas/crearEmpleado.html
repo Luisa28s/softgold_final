@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{plantillas/principal :: head}"></head>
+<script th:src="@{/js/registro.js}"></script>
+
+<body>
+    <header th:replace="~{plantillas/principal :: header}"></header>
+
+    <main class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card shadow">
+                    <div class="card-header text-center">
+                        <h4 class="text-primary">Crear Empleado</h4>
+                    </div>
+                    <div class="card-body">
+                        <form th:action="@{/admin/empleados/crear}" th:object="${usuario}" method="post">
+                            <!-- Campo oculto para el ID -->
+                            <input type="hidden" th:field="*{id}" />
+
+                            <!-- Tipo de documento -->
+                            <div class="mb-3">
+                                <label for="tipoDocumento" class="form-label">Tipo de Documento</label>
+                                <select th:field="*{tipoDocumento}" class="form-select" required>
+                                    <option value="" disabled selected>Selecciona un tipo</option>
+                                    <option value="Cédula de ciudadanía">Cédula de ciudadanía</option>
+                                    <option value="Cédula de extranjería">Cédula de extranjería</option>
+                                    <option value="Pasaporte">Pasaporte</option>
+                                </select>
+                            </div>
+
+                            <!-- Cédula -->
+                            <div class="mb-3">
+                                <label for="id" class="form-label">Cédula</label>
+                                <input type="text" th:field="*{id}" class="form-control" required>
+                            </div>
+
+                            <!-- Primer Nombre -->
+                            <div class="mb-3">
+                                <label for="nombre1" class="form-label">Primer Nombre</label>
+                                <input type="text" th:field="*{nombre1}" class="form-control" required>
+                            </div>
+
+                            <!-- Primer Apellido -->
+                            <div class="mb-3">
+                                <label for="apellido1" class="form-label">Primer Apellido</label>
+                                <input type="text" th:field="*{apellido1}" class="form-control" required>
+                            </div>
+
+                            <!-- Correo Electrónico -->
+                            <div class="mb-3">
+                                <label for="email" class="form-label">Correo Electrónico</label>
+                                <input type="email" th:field="*{email}" class="form-control" required>
+                            </div>
+
+                            <!-- Tipo de Empleado -->
+                            <div class="mb-3">
+                                <label for="tipoEmpleado" class="form-label">Tipo de Empleado</label>
+                                <select th:field="*{tipoEmpleado}" class="form-select" required>
+                                    <option value="" disabled selected>Selecciona un tipo</option>
+                                    <option value="Administrativo">Administrativo</option>
+                                    <option value="Operativo">Operativo</option>
+                                </select>
+                            </div>
+
+                            <!-- Área -->
+                            <div class="mb-3">
+                                <label for="area" class="form-label">Área</label>
+                                <input type="text" th:field="*{area}" class="form-control" required>
+                            </div>
+
+                            <!-- Contraseña -->
+                            <div class="mb-3">
+                                <label for="password" class="form-label">Contraseña</label>
+                                <div class="input-group">
+                                    <input type="password" th:field="*{passwordPlano}" class="form-control"
+                                        id="passwordPlanoEmpleado" required>
+                                    <button class="btn btn-outline-secondary" type="button" id="togglePasswordEmpleado">
+                                        <i class="bi bi-eye"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <!-- Botón Guardar -->
+                            <div class="d-grid">
+                                <button type="submit" class="btn btn-primary">Guardar</button>
+                            </div>
+                        </form>
+
+                        <!-- Botón Volver -->
+                        <div class="mt-3 text-center">
+                            <a th:href="@{/admin/empleados}" class="btn btn-link text-secondary">Volver al listado</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer th:replace="~{plantillas/principal :: footer}"></footer>
+</body>
+
+</html>

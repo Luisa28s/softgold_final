@@ -12,7 +12,7 @@ import com.proyectoL.softgold.model.Usuario;
 public interface PasswordResetTokenDAO extends JpaRepository<PasswordResetToken, Long> {
     Optional<PasswordResetToken> findByToken(String token);
 
-    void deleteByUsuarioId(Long id);
+    void deleteByUsuarioId(Long usuarioId);
 
     Optional<PasswordResetToken> findByUsuario(Usuario usuario);
 

@@ -15,27 +15,30 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 
 @Entity
-@Table(name = "usuarios", uniqueConstraints = @UniqueConstraint(columnNames = "email"))
+@Table(name = "usuarios")
 public class Usuario implements UserDetails {
 
     @Id
-    @Column(name = "id", nullable = false, unique = true)
-    @NotNull
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "cedula", nullable = false, unique = true)
+    @NotBlank(message = "La cédula es obligatoria")
+    private String cedula;
+
     @Column(name = "tipo_documento", nullable = false)
-    @NotNull
+    @NotBlank(message = "El tipo de documento es obligatorio")
     private String tipoDocumento;
 
     @Column(name = "nombre_1", nullable = false)
-    @NotBlank
+    @NotBlank(message = "El nombre es obligatorio")
     private String nombre1;
 
     @Column(name = "nombre_2", nullable = false)
     private String nombre2;
 
     @Column(name = "apellido_1", nullable = false)
-    @NotBlank
+    @NotBlank(message = "El apellido es obligatorio")
     private String apellido1;
 
     @Column(name = "apellido_2", nullable = false)
@@ -43,7 +46,7 @@ public class Usuario implements UserDetails {
 
     @Column(name = "email", nullable = false, unique = true)
     @Email
-    @NotBlank
+    @NotBlank(message = "El email es obligatorio")
     private String email;
 
     @Transient
@@ -66,6 +69,22 @@ public class Usuario implements UserDetails {
     @Column(name = "tiempo_bloqueo", nullable = true)
     private LocalDateTime tiempoBloqueo;
 
+    @Column(name = "tipo_usuario", nullable = false)
+    @NotBlank(message = "El tipo de usuario es obligatorio")
+    private String tipoUsuario;
+
+    @Column(name = "telefono")
+    private String telefono; // Asegúrate de que el tipo sea String
+
+    @Column(name = "mina")
+    private String mina; // Asegúrate de que el tipo sea String
+
+    @Column(name = "tipo_empleado")
+    private String tipoEmpleado; // Asegúrate de que el tipo sea String
+
+    @Column(name = "area")
+    private String area; // Asegúrate de que el tipo sea String
+
     // Constructores
     public Usuario() {
         this.intentosFallidos = 0;
@@ -73,7 +92,8 @@ public class Usuario implements UserDetails {
         this.tiempoBloqueo = null;
     }
 
-    public Usuario(Long id, String tipoDocumento, @NotBlank String nombre1, String nombre2, @NotBlank String apellido1,
+    public Usuario(Long id, String tipoDocumento, @NotBlank String nombre1, String nombre2,
+            @NotBlank String apellido1,
             String apellido2, @Email @NotBlank String email, String password, Collection<Rol> roles) {
         this.id = id;
         this.tipoDocumento = tipoDocumento;
@@ -87,15 +107,6 @@ public class Usuario implements UserDetails {
         this.intentosFallidos = 0;
         this.bloqueado = false;
         this.tiempoBloqueo = null;
-    }
-
-    // Getters y setters
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getTipoDocumento() {
@@ -186,6 +197,46 @@ public class Usuario implements UserDetails {
         this.tiempoBloqueo = tiempoBloqueo;
     }
 
+    public String getTipoUsuario() {
+        return tipoUsuario;
+    }
+
+    public void setTipoUsuario(String tipoUsuario) {
+        this.tipoUsuario = tipoUsuario;
+    }
+
+    public String getTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
+    }
+
+    public String getMina() {
+        return mina;
+    }
+
+    public void setMina(String mina) {
+        this.mina = mina;
+    }
+
+    public String getTipoEmpleado() {
+        return tipoEmpleado;
+    }
+
+    public void setTipoEmpleado(String tipoEmpleado) {
+        this.tipoEmpleado = tipoEmpleado;
+    }
+
+    public String getArea() {
+        return area;
+    }
+
+    public void setArea(String area) {
+        this.area = area;
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return roles.stream()
@@ -229,5 +280,21 @@ public class Usuario implements UserDetails {
     @Override
     public String toString() {
         return "Usuario [id=" + id + ", nombre=" + nombre1 + " " + apellido1 + ", email=" + email + "]";
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getCedula() {
+        return cedula;
+    }
+
+    public void setCedula(String cedula) {
+        this.cedula = cedula;
     }
 }

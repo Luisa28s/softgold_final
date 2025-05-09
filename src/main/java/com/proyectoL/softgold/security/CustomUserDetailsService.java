@@ -42,7 +42,7 @@ public class CustomUserDetailsService implements UserDetailsService {
                 }
 
                 System.out.println("Usuario encontrado: " + usuario.getEmail());
-                System.out.println("Contraseña almacenada: " + usuario.getPassword());
+                System.out.println("Contraseña almacenada: [PROTEGIDA]");
                 System.out.println("Roles del usuario: " + usuario.getRoles());
                 System.out.println("¿Coinciden?: " + passwordEncoder.matches("superSegura123", usuario.getPassword()));
 

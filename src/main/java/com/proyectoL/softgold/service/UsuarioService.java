@@ -54,7 +54,7 @@ public class UsuarioService implements UsuarioServiceIface {
         // Asignar manualmente el rol predeterminado
         Rol rol = rolDAO.findByNombre("USUARIO");
 
-        if (rol == null) {
+        if (rol == null || rol.getNombre() == null) {
             throw new RuntimeException("Rol no encontrado: USUARIO");
         }
 

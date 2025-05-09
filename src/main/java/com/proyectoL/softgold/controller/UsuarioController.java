@@ -40,7 +40,7 @@ public class UsuarioController {
         return "vistas/usuario";
     }
 
-    @GetMapping("/admin")
+    @GetMapping("/usuario/admin")
     public String vistaAdmin(Model model, Principal principal) {
         Usuario usuario = usuarioService.buscarPorEmail(principal.getName()).orElse(null);
         model.addAttribute("usuario", usuario);
