@@ -1,5 +1,6 @@
 package com.proyectoL.softgold.controller;
 
+import com.proyectoL.softgold.model.Rol;
 import com.proyectoL.softgold.model.Usuario;
 import com.proyectoL.softgold.repository.UsuarioDAO;
 import com.proyectoL.softgold.repository.RolDAO;
@@ -12,6 +13,8 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import jakarta.validation.Valid;
+
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -63,9 +66,16 @@ public class EmpleadoController {
             return "redirect:/admin/usuarios/empleados/crear";
         }
 
+        Rol rolEmpleado = rolDAO.findByNombre("EMPLEADO");
+        if (rolEmpleado == null) {
+            redirectAttrs.addFlashAttribute("error", "El rol 'EMPLEADO' no existe en la base de datos.");
+            return "redirect:/admin/usuarios/empleados";
+        }
+
         usuario.setPassword(passwordEncoder.encode(usuario.getPasswordPlano()));
-        usuario.setTipoUsuario("EMPLEADO");
-        usuario.setRoles(List.of(rolDAO.findByNombre("EMPLEADO")));
+        usuario.setRoles(Collections.singleton(rolEmpleado));
+        usuario.setBloqueado(false);
+        usuario.setIntentosFallidos(0);
 
         usuarioDAO.save(usuario);
         redirectAttrs.addFlashAttribute("exito", "Empleado creado correctamente.");
@@ -107,8 +117,13 @@ public class EmpleadoController {
 
         Usuario empleadoExistente = usuarioOpt.get();
         empleadoExistente.setNombre1(usuario.getNombre1());
+        empleadoExistente.setNombre2(usuario.getNombre2());
         empleadoExistente.setApellido1(usuario.getApellido1());
+        empleadoExistente.setApellido2(usuario.getApellido2());
         empleadoExistente.setEmail(usuario.getEmail());
+        empleadoExistente.setTelefono(usuario.getTelefono());
+        empleadoExistente.setMina(usuario.getMina());
+
         if (usuario.getPasswordPlano() != null && !usuario.getPasswordPlano().isEmpty()) {
             empleadoExistente.setPassword(passwordEncoder.encode(usuario.getPasswordPlano()));
         }

@@ -5,7 +5,6 @@ import com.proyectoL.softgold.repository.UsuarioDAO;
 import com.proyectoL.softgold.service.UsuarioService;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.authentication.LockedException;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.*;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -13,7 +12,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.stream.Collectors;
 
-//Autenticador de usuarios 
 @Service
 public class CustomUserDetailsService implements UserDetailsService {
 
@@ -36,26 +34,24 @@ public class CustomUserDetailsService implements UserDetailsService {
                                         return new UsernameNotFoundException("Usuario no encontrado");
                                 });
 
-                if (!usuarioService.isAccountNonLocked(usuario)) {
-                        System.out.println("La cuenta aún está bloqueada para: " + email);
-                        throw new LockedException("La cuenta está bloqueada. Intenta más tarde.");
-                }
-
                 System.out.println("Usuario encontrado: " + usuario.getEmail());
-                System.out.println("Contraseña almacenada: [PROTEGIDA]");
+                System.out.println("Contraseña almacenada: " + usuario.getPassword());
                 System.out.println("Roles del usuario: " + usuario.getRoles());
-                System.out.println("¿Coinciden?: " + passwordEncoder.matches("superSegura123", usuario.getPassword()));
 
                 usuario.getRoles().forEach(rol -> {
                         System.out.println("Nombre del rol: [" + rol.getNombre() + "]");
                 });
 
+                // Aquí devolvemos un User con estados personalizados
                 return new org.springframework.security.core.userdetails.User(
                                 usuario.getEmail(),
                                 usuario.getPassword(),
+                                true, // enabled
+                                true, // accountNonExpired
+                                true, // credentialsNonExpired
+                                usuarioService.isAccountNonLocked(usuario), // accountNonLocked
                                 usuario.getRoles().stream()
                                                 .map(rol -> new SimpleGrantedAuthority("ROLE_" + rol.getNombre()))
                                                 .collect(Collectors.toList()));
         }
-
 }

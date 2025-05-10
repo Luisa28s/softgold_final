@@ -81,7 +81,7 @@ public class LoginController {
                 return "vistas/registro";
             }
 
-            // Asignar rol "USUARIO" automáticamente
+            // Asignar rol genérico "USUARIO"
             Rol rolUsuario = rolDAO.findByNombre("USUARIO");
             if (rolUsuario == null) {
                 model.addAttribute("error", "El rol 'USUARIO' no existe en la base de datos.");

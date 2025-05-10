@@ -8,6 +8,7 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.core.GrantedAuthorityDefaults;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 //Configuracion de seguridad para la aplicacion, rutas permitidas y roles de usuario
@@ -38,7 +39,8 @@ public class SecurityConfig {
                                                 "/css/**", "/js/**", "/images/**", "/redirectByRole")
                                 .permitAll()
                                 .requestMatchers("/admin/**").hasRole("ADMINISTRADOR")
-                                .requestMatchers("/usuario/**").hasRole("USUARIO")
+                                .requestMatchers("/minero/**").hasRole("MINERO")
+                                .requestMatchers("/empleado/**").hasRole("EMPLEADO")
                                 .anyRequest().authenticated())
                                 .formLogin(form -> form
                                                 .loginPage("/login")

@@ -14,10 +14,15 @@ public class RedireccionController {
                 .anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("ROLE_ADMINISTRADOR"))) {
             return "redirect:/admin";
         } else if (authentication.getAuthorities().stream()
-                .anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("ROLE_USUARIO"))) {
-            return "redirect:/usuario";
+                .anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("ROLE_MINERO"))) {
+            return "redirect:/minero/inicio";
+        } else if (authentication.getAuthorities().stream()
+                .anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("ROLE_EMPLEADO"))) {
+            return "redirect:/empleado";
+        } else {
+            return "redirect:/";
+
         }
-        return "redirect:/login?error";
 
     }
 

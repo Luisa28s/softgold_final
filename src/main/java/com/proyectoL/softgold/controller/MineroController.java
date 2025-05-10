@@ -1,5 +1,6 @@
 package com.proyectoL.softgold.controller;
 
+import com.proyectoL.softgold.model.Rol;
 import com.proyectoL.softgold.model.Usuario;
 import com.proyectoL.softgold.repository.UsuarioDAO;
 import com.proyectoL.softgold.repository.RolDAO;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import jakarta.validation.Valid;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -49,22 +51,26 @@ public class MineroController {
 
     // Procesar la creación de un minero
     @PostMapping("/crear")
-    public String procesarCrearMinero(
-            @Valid @ModelAttribute("usuario") Usuario usuario,
-            BindingResult result,
+    public String crearMinero(@ModelAttribute("usuario") Usuario usuario, BindingResult result,
             RedirectAttributes redirectAttrs) {
-
         if (result.hasErrors()) {
-            System.out.println("Errores de validación: " + result.getAllErrors());
             return "vistas/crearMinero";
         }
 
+        Rol rolMinero = rolDAO.findByNombre("MINERO");
+        if (rolMinero == null) {
+            redirectAttrs.addFlashAttribute("error", "El rol 'MINERO' no existe en la base de datos.");
+            return "redirect:/admin/usuarios/mineros";
+        }
+
         usuario.setPassword(passwordEncoder.encode(usuario.getPasswordPlano()));
-        usuario.setTipoUsuario("MINERO");
-        usuario.setRoles(List.of(rolDAO.findByNombre("MINERO")));
+        usuario.setRoles(Collections.singleton(rolMinero));
+        usuario.setBloqueado(false);
+        usuario.setIntentosFallidos(0);
 
         usuarioDAO.save(usuario);
-        redirectAttrs.addFlashAttribute("exito", "Minero creado correctamente.");
+
+        redirectAttrs.addFlashAttribute("mensaje", "Minero creado exitosamente.");
         return "redirect:/admin/usuarios/mineros";
     }
 
@@ -130,5 +136,11 @@ public class MineroController {
         usuarioDAO.deleteById(id);
         redirectAttrs.addFlashAttribute("exito", "Minero eliminado correctamente.");
         return "redirect:/admin/usuarios/mineros";
+    }
+
+    @GetMapping("/inicio")
+    public String mostrarDashboardMinero(Model model) {
+        model.addAttribute("titulo", "Panel de Minero");
+        return "vistas/inicioMinero"; // Asegúrate de tener esta vista
     }
 }

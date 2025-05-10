@@ -113,14 +113,15 @@
                                 <label class="form-label">Contraseña</label>
                                 <div class="input-group">
                                     <input type="password" th:field="*{passwordPlano}" class="form-control"
-                                        id="passwordPlanoMinero">
-                                    <button class="btn btn-outline-secondary" type="button" id="togglePasswordMinero">
+                                        id="passwordPlano" pattern="(?=.*[A-Z])(?=.*\d).{8,20}"
+                                        title="Debe tener al menos 8 caracteres, una letra mayúscula y un número"
+                                        required>
+                                    <button class="btn btn-outline-secondary" type="button" id="togglePassword">
                                         <i class="bi bi-eye"></i>
                                     </button>
                                 </div>
-                                <div th:if="${#fields.hasErrors('passwordPlano')}" class="text-danger">
-                                    <p th:errors="*{passwordPlano}"></p>
-                                </div>
+                                <div class="text-danger" th:if="${#fields.hasErrors('passwordPlano')}"
+                                    th:errors="*{passwordPlano}"></div>
                             </div>
 
                             <!-- Botón Guardar -->

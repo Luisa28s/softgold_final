@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{plantillas/principal :: head}"></head>
+
+<body>
+    <header th:replace="~{plantillas/principal :: header}"></header>
+    <main class="container mt-5">
+        <h1 th:text="${titulo}">Panel de Minero</h1>
+        <p>Bienvenido al panel de control del minero.</p>
+    </main>
+    <footer th:replace="~{plantillas/principal :: footer}"></footer>
+</body>
+
+</html>

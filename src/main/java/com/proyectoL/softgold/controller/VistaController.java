@@ -26,6 +26,13 @@ public class VistaController {
         return "vistas/usuario";
     }
 
+    @GetMapping("/minero/inicio")
+    public String mostrarPanelMinero(Model model, Authentication authentication) {
+        model.addAttribute("nombreUsuario", authentication.getName());
+        model.addAttribute("rolUsuario", obtenerRol(authentication));
+        return "vistas/inicioMinero"; // Asegúrate de que esta vista exista
+    }
+
     @GetMapping("/buscar")
     public String buscar(@RequestParam("query") String query, RedirectAttributes redirectAttrs) {
         // Normalizar el término de búsqueda

@@ -34,6 +34,20 @@ public class DataInitializer {
             rolDAO.save(rolAdmin);
         }
 
+        Rol rolMinero = rolDAO.findByNombre("MINERO");
+        if (rolMinero == null) {
+            rolMinero = new Rol();
+            rolMinero.setNombre("MINERO");
+            rolDAO.save(rolMinero);
+        }
+
+        Rol rolEmpleado = rolDAO.findByNombre("EMPLEADO");
+        if (rolEmpleado == null) {
+            rolEmpleado = new Rol();
+            rolEmpleado.setNombre("EMPLEADO");
+            rolDAO.save(rolEmpleado);
+        }
+
         // Crear un usuario administrador si no existe
         Optional<Usuario> adminOpt = usuarioDAO.findByEmail("admin@softgold.com");
         if (adminOpt.isEmpty()) {
