@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{plantillas/principal :: head}"></head>
+
+<body>
+    <header th:replace="~{plantillas/principal :: header}"></header>
+
+    <main class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <div class="card shadow">
+                    <div class="card-header bg-primary text-white text-center">
+                        <h2>Bienvenido a SoftGold</h2>
+                    </div>
+                    <div class="card-body">
+                        <h4 class="mb-3 text-primary">Sistema de Gestión de Minas de Oro</h4>
+                        <p>
+                            SoftGold es una plataforma integral diseñada para facilitar la gestión eficiente de minas de
+                            oro.
+                            Nuestro sistema permite a los usuarios:
+                        </p>
+                        <ul>
+                            <li>Registrar y administrar empleados y mineros.</li>
+                            <li>Gestionar información de minas y áreas de trabajo.</li>
+                            <li>Controlar la producción y hallazgos de oro de manera sencilla.</li>
+                            <li>Acceder a reportes y estadísticas para la toma de decisiones.</li>
+                        </ul>
+                        <p>
+                            Con SoftGold, encontrar y gestionar oro es más fácil, seguro y eficiente.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer th:replace="~{plantillas/principal :: footer}"></footer>
+</body>
+
+</html>

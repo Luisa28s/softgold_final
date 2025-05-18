@@ -51,8 +51,11 @@ public class MineroController {
 
     // Procesar la creación de un minero
     @PostMapping("/crear")
-    public String crearMinero(@ModelAttribute("usuario") Usuario usuario, BindingResult result,
-            RedirectAttributes redirectAttrs) {
+    public String crearMinero(
+            @Valid @ModelAttribute("usuario") Usuario usuario, // <-- Agrega @Valid aquí
+            BindingResult result,
+            RedirectAttributes redirectAttrs,
+            Model model) {
         if (result.hasErrors()) {
             return "vistas/crearMinero";
         }
@@ -61,6 +64,16 @@ public class MineroController {
         if (rolMinero == null) {
             redirectAttrs.addFlashAttribute("error", "El rol 'MINERO' no existe en la base de datos.");
             return "redirect:/admin/usuarios/mineros";
+        }
+
+        if (usuarioDAO.existsByCedula(usuario.getCedula())) {
+            model.addAttribute("errorCedula", "Ya existe un usuario con la cédula ingresada.");
+            return "vistas/crearMinero";
+        }
+
+        if (usuarioDAO.existsByEmail(usuario.getEmail())) {
+            model.addAttribute("errorEmail", "Ya existe un usuario con el correo ingresado.");
+            return "vistas/crearMinero";
         }
 
         usuario.setPassword(passwordEncoder.encode(usuario.getPasswordPlano()));
@@ -138,9 +151,4 @@ public class MineroController {
         return "redirect:/admin/usuarios/mineros";
     }
 
-    @GetMapping("/inicio")
-    public String mostrarDashboardMinero(Model model) {
-        model.addAttribute("titulo", "Panel de Minero");
-        return "vistas/inicioMinero"; // Asegúrate de tener esta vista
-    }
 }

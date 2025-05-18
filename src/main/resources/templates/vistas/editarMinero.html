@@ -48,6 +48,9 @@
                                 <div th:if="${#fields.hasErrors('cedula')}" class="text-danger">
                                     <p th:errors="*{cedula}"></p>
                                 </div>
+                                <div th:if="${errorCedula}" class="text-danger">
+                                    <p th:text="${errorCedula}"></p>
+                                </div>
                             </div>
 
                             <!-- Primer Nombre -->
@@ -88,6 +91,9 @@
                                 <input type="email" th:field="*{email}" class="form-control">
                                 <div th:if="${#fields.hasErrors('email')}" class="text-danger">
                                     <p th:errors="*{email}"></p>
+                                </div>
+                                <div th:if="${errorEmail}" class="text-danger">
+                                    <p th:text="${errorEmail}"></p>
                                 </div>
                             </div>
 
@@ -141,6 +147,20 @@
     </main>
 
     <footer th:replace="~{plantillas/principal :: footer}"></footer>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const togglePassword = document.getElementById('togglePassword');
+            const passwordInput = document.getElementById('passwordPlano');
+            if (togglePassword && passwordInput) {
+                togglePassword.addEventListener('click', function () {
+                    const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                    passwordInput.setAttribute('type', type);
+                    this.querySelector('i').classList.toggle('bi-eye');
+                    this.querySelector('i').classList.toggle('bi-eye-slash');
+                });
+            }
+        });
+    </script>
 </body>
 
 </html>

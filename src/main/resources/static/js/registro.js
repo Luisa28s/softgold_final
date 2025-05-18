@@ -1,37 +1,89 @@
 document.addEventListener("DOMContentLoaded", () => {
-    const form = document.querySelector("form"); // Cualquier formulario
-    const email = document.querySelector("input[type='email']");
-    const password = document.querySelector("input[type='password']");
-    const alerta = document.getElementById("alerta");
-    const confirmar = document.getElementById("confirmar"); 
+    const form = document.querySelector("form");
+    const email = document.getElementById("email");
+    const password = document.getElementById("passwordPlano");
+    const confirmar = document.getElementById("confirmar");
+    const errorEmail = document.getElementById("errorEmail");
+    const errorPassword = document.getElementById("errorPassword");
+    const errorConfirmar = document.getElementById("errorConfirmar");
 
     if (!form || !email || !password) return;
 
-    form.addEventListener("submit", (e) => {
-        if (alerta) {
-            alerta.classList.add("d-none");
-            alerta.innerText = "";
+    // --- Validación en tiempo real para email ---
+    email.addEventListener("input", () => {
+        if (!email.value) {
+            errorEmail.textContent = "Debes completar el correo electrónico.";
+        } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value)) {
+            errorEmail.textContent = "Ingresa un correo electrónico válido.";
+        } else {
+            errorEmail.textContent = "";
         }
-
-        const emailValido = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value);
-        const passwordValida = /^(?=.*[A-Z])(?=.*\d).{8,}$/.test(password.value);
-
-        if (!emailValido) {
-            e.preventDefault();
-            mostrarError("Ingresa un correo electrónico válido.");
-        } else if (!passwordValida) {
-            e.preventDefault();
-            mostrarError("La contraseña debe tener al menos 8 caracteres, una mayúscula y un número.");
-        } else if (confirmar && password.value !== confirmar.value) {
-            e.preventDefault();
-            mostrarError("Las contraseñas no coinciden.");
+    });
+    email.addEventListener("blur", () => {
+        if (!email.value) {
+            errorEmail.textContent = "Debes completar el correo electrónico.";
         }
     });
 
-    function mostrarError(mensaje) {
-        if (!alerta) return;
-        alerta.innerText = mensaje;
-        alerta.classList.remove("d-none");
-        alerta.classList.add("alert", "alert-danger");
+    // --- Validación en tiempo real para contraseña ---
+    password.addEventListener("input", () => {
+        if (!password.value) {
+            errorPassword.textContent = "Debes completar la contraseña.";
+        } else if (!/^(?=.*[A-Z])(?=.*\d).{8,}$/.test(password.value)) {
+            errorPassword.textContent = "La contraseña debe tener al menos 8 caracteres, una mayúscula y un número.";
+        } else if (confirmar && confirmar.value && password.value !== confirmar.value) {
+            errorConfirmar.textContent = "Las contraseñas no coinciden.";
+            errorPassword.textContent = "";
+        } else {
+            errorPassword.textContent = "";
+            if (errorConfirmar) errorConfirmar.textContent = "";
+        }
+    });
+    password.addEventListener("blur", () => {
+        if (!password.value) {
+            errorPassword.textContent = "Debes completar la contraseña.";
+        }
+    });
+
+    // --- Validación en tiempo real para confirmar contraseña ---
+    if (confirmar && errorConfirmar) {
+        confirmar.addEventListener("input", () => {
+            if (!confirmar.value) {
+                errorConfirmar.textContent = "Debes confirmar la contraseña.";
+            } else if (password.value !== confirmar.value) {
+                errorConfirmar.textContent = "Las contraseñas no coinciden.";
+            } else {
+                errorConfirmar.textContent = "";
+            }
+        });
+        confirmar.addEventListener("blur", () => {
+            if (!confirmar.value) {
+                errorConfirmar.textContent = "Debes confirmar la contraseña.";
+            }
+        });
     }
+
+    // --- Validación al enviar el formulario ---
+    form.addEventListener("submit", (e) => {
+        let hayError = false;
+        if (!email.value) {
+            errorEmail.textContent = "Debes completar el correo electrónico.";
+            hayError = true;
+        } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value)) {
+            errorEmail.textContent = "Ingresa un correo electrónico válido.";
+            hayError = true;
+        }
+        if (!password.value) {
+            errorPassword.textContent = "Debes completar la contraseña.";
+            hayError = true;
+        } else if (!/^(?=.*[A-Z])(?=.*\d).{8,}$/.test(password.value)) {
+            errorPassword.textContent = "La contraseña debe tener al menos 8 caracteres, una mayúscula y un número.";
+            hayError = true;
+        }
+        if (confirmar && (!confirmar.value || password.value !== confirmar.value)) {
+            errorConfirmar.textContent = "Las contraseñas no coinciden.";
+            hayError = true;
+        }
+        if (hayError) e.preventDefault();
+    });
 });

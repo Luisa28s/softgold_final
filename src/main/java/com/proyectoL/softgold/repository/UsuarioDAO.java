@@ -22,4 +22,6 @@ public interface UsuarioDAO extends JpaRepository<Usuario, Long> {
     boolean existsById(Long id);
 
     List<Usuario> findByTipoUsuario(String tipoUsuario);
+
+    boolean existsByCedula(String cedula);
 }

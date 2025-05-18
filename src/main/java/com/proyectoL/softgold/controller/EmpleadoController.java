@@ -52,24 +52,30 @@ public class EmpleadoController {
 
     // Procesar la creación de un empleado
     @PostMapping("/crear")
-    public String procesarCrearEmpleado(
+    public String crearEmpleado(
             @Valid @ModelAttribute("usuario") Usuario usuario,
             BindingResult result,
+            Model model,
             RedirectAttributes redirectAttrs) {
 
         if (result.hasErrors()) {
             return "vistas/crearEmpleado";
         }
 
-        if (usuarioDAO.findByEmail(usuario.getEmail()).isPresent()) {
-            redirectAttrs.addFlashAttribute("error", "Ya existe un usuario con ese correo.");
-            return "redirect:/admin/usuarios/empleados/crear";
-        }
-
         Rol rolEmpleado = rolDAO.findByNombre("EMPLEADO");
         if (rolEmpleado == null) {
-            redirectAttrs.addFlashAttribute("error", "El rol 'EMPLEADO' no existe en la base de datos.");
-            return "redirect:/admin/usuarios/empleados";
+            model.addAttribute("error", "El rol 'EMPLEADO' no existe en la base de datos.");
+            return "vistas/crearEmpleado";
+        }
+
+        if (usuarioDAO.existsByCedula(usuario.getCedula())) {
+            model.addAttribute("errorCedula", "Ya existe un empleado con la cédula ingresada.");
+            return "vistas/crearEmpleado";
+        }
+
+        if (usuarioDAO.existsByEmail(usuario.getEmail())) {
+            model.addAttribute("errorEmail", "Ya existe un empleado con el correo ingresado.");
+            return "vistas/crearEmpleado";
         }
 
         usuario.setPassword(passwordEncoder.encode(usuario.getPasswordPlano()));
@@ -146,4 +152,5 @@ public class EmpleadoController {
         redirectAttrs.addFlashAttribute("exito", "Empleado eliminado correctamente.");
         return "redirect:/admin/usuarios/empleados";
     }
+
 }

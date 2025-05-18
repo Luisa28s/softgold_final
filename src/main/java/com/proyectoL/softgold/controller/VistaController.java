@@ -26,13 +26,6 @@ public class VistaController {
         return "vistas/usuario";
     }
 
-    @GetMapping("/minero/inicio")
-    public String mostrarPanelMinero(Model model, Authentication authentication) {
-        model.addAttribute("nombreUsuario", authentication.getName());
-        model.addAttribute("rolUsuario", obtenerRol(authentication));
-        return "vistas/inicioMinero"; // Asegúrate de que esta vista exista
-    }
-
     @GetMapping("/buscar")
     public String buscar(@RequestParam("query") String query, RedirectAttributes redirectAttrs) {
         // Normalizar el término de búsqueda
@@ -43,12 +36,12 @@ public class VistaController {
             case "registrarse":
             case "registro":
                 return "redirect:/registro";
-            case "iniciar sesión":
-            case "login":
+            case "iniciar sesion":
+            case "inicio sesion":
                 return "redirect:/login";
-            case "administración":
-            case "admin":
-                return "redirect:/admin";
+            case "inicio":
+            case "Inicio":
+                return "redirect:/inicio";
             default:
                 // Si no se encuentra una coincidencia, mostrar un mensaje de error
                 redirectAttrs.addFlashAttribute("error", "No se encontró la sección solicitada.");

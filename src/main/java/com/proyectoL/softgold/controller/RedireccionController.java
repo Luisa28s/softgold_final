@@ -18,7 +18,7 @@ public class RedireccionController {
             return "redirect:/minero/inicio";
         } else if (authentication.getAuthorities().stream()
                 .anyMatch(grantedAuthority -> grantedAuthority.getAuthority().equals("ROLE_EMPLEADO"))) {
-            return "redirect:/empleado";
+            return "redirect:/empleado/inicio";
         } else {
             return "redirect:/";
 

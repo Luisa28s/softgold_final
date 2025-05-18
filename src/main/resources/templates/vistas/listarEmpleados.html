@@ -13,17 +13,29 @@
             <thead>
                 <tr>
                     <th>ID</th>
-                    <th>Nombre</th>
+                    <th>Nombre Completo</th>
+                    <th>Tipo de Documento</th>
+                    <th>Documento</th>
                     <th>Email</th>
+                    <th>Mina</th>
                     <th>Área</th>
                     <th>Acciones</th>
                 </tr>
             </thead>
             <tbody>
-                <tr th:each="usuario : ${listaUsuarios}">
+                <tr th:if="${listaUsuarios == null or listaUsuarios.size() == 0}">
+                    <td colspan="6" class="text-center">No hay mineros registrados.</td>
+                </tr>
+
+                <tr th:each="usuario : ${listaUsuarios}" th:if="${listaUsuarios != null}">
                     <td th:text="${usuario.id}"></td>
-                    <td th:text="${usuario.nombre1} + ' ' + ${usuario.apellido1}"></td>
+                    <td
+                        th:text="${usuario.nombre1} + ' ' + ${usuario.nombre2} + ' ' + ${usuario.apellido1} + ' ' + ${usuario.apellido2}">
+                    </td>
+                    <td th:text="${usuario.tipoDocumento}"></td>
+                    <td th:text="${usuario.cedula}"></td>
                     <td th:text="${usuario.email}"></td>
+                    <td th:text="${usuario.mina}"></td>
                     <td th:text="${usuario.area}"></td>
                     <td>
                         <a th:href="@{/admin/usuarios/empleados/editar/{id}(id=${usuario.id})}"
