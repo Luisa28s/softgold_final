@@ -133,3 +133,17 @@ body.tema-oscuro .navbar-toggler-icon {
 }
 
 
+.navbar .nav-link.active {
+    background: rgba(255,255,255,0.2);
+    border-radius: 8px;
+    font-weight: bold;
+}
+.navbar .nav-link {
+    transition: background 0.2s;
+}
+.navbar-brand img.icono {
+    border-radius: 50%;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+

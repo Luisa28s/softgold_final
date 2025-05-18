@@ -4,7 +4,6 @@
 <head th:replace="~{plantillas/principal :: head}"></head>
 <script th:src="@{/js/registro.js}"></script>
 
-
 <body>
     <header th:replace="~{plantillas/principal :: header}"></header>
 
@@ -31,9 +30,15 @@
                             <div class="mb-3">
                                 <label class="form-label">Tipo de Documento</label>
                                 <select th:field="*{tipoDocumento}" class="form-select" required>
-                                    <option value="" disabled selected>Selecciona un tipo</option>
-                                    <option value="Cédula de ciudadanía">Cédula de ciudadanía</option>
-                                    <option value="Cédula de extranjería">Cédula de extranjería</option>
+                                    <option value="" disabled selected>
+                                        Selecciona un tipo
+                                    </option>
+                                    <option value="Cédula de ciudadanía">
+                                        Cédula de ciudadanía
+                                    </option>
+                                    <option value="Cédula de extranjería">
+                                        Cédula de extranjería
+                                    </option>
                                     <option value="Pasaporte">Pasaporte</option>
                                 </select>
                                 <div th:if="${#fields.hasErrors('tipoDocumento')}" class="text-danger">
@@ -44,7 +49,7 @@
                             <!-- Cédula -->
                             <div class="mb-3">
                                 <label class="form-label">Cédula</label>
-                                <input type="text" th:field="*{cedula}" class="form-control" required>
+                                <input type="text" th:field="*{cedula}" class="form-control" required />
                                 <div id="errorCedula" class="text-danger"></div>
                                 <div th:if="${#fields.hasErrors('cedula')}" class="text-danger">
                                     <p th:errors="*{cedula}"></p>
@@ -57,7 +62,7 @@
                             <!-- Primer Nombre -->
                             <div class="mb-3">
                                 <label class="form-label">Primer Nombre</label>
-                                <input type="text" th:field="*{nombre1}" class="form-control">
+                                <input type="text" th:field="*{nombre1}" class="form-control" />
                                 <div id="errorNombre1" class="text-danger"></div>
                                 <div th:if="${#fields.hasErrors('nombre1')}" class="text-danger">
                                     <p th:errors="*{nombre1}"></p>
@@ -67,15 +72,14 @@
                             <!-- Segundo Nombre -->
                             <div class="mb-3">
                                 <label class="form-label">Segundo Nombre</label>
-                                <input type="text" th:field="*{nombre2}" class="form-control">
+                                <input type="text" th:field="*{nombre2}" class="form-control" />
                                 <div id="errorNombre2" class="text-danger"></div>
-
                             </div>
 
                             <!-- Primer Apellido -->
                             <div class="mb-3">
                                 <label class="form-label">Primer Apellido</label>
-                                <input type="text" th:field="*{apellido1}" class="form-control">
+                                <input type="text" th:field="*{apellido1}" class="form-control" />
                                 <div id="errorApellido1" class="text-danger"></div>
                                 <div th:if="${#fields.hasErrors('apellido1')}" class="text-danger">
                                     <p th:errors="*{apellido1}"></p>
@@ -85,15 +89,14 @@
                             <!-- Segundo Apellido -->
                             <div class="mb-3">
                                 <label class="form-label">Segundo Apellido</label>
-                                <input type="text" th:field="*{apellido2}" class="form-control">
+                                <input type="text" th:field="*{apellido2}" class="form-control" />
                                 <div id="errorApellido2" class="text-danger"></div>
-
                             </div>
 
                             <!-- Correo Electrónico -->
                             <div class="mb-3">
                                 <label class="form-label">Correo Electrónico</label>
-                                <input type="email" th:field="*{email}" class="form-control">
+                                <input type="email" th:field="*{email}" class="form-control" />
                                 <div id="errorEmail" class="text-danger"></div>
                                 <div th:if="${#fields.hasErrors('email')}" class="text-danger">
                                     <p th:errors="*{email}"></p>
@@ -106,7 +109,7 @@
                             <!-- Teléfono -->
                             <div class="mb-3">
                                 <label class="form-label">Teléfono</label>
-                                <input type="text" th:field="*{telefono}" class="form-control">
+                                <input type="text" th:field="*{telefono}" class="form-control" />
                                 <div id="errorTelefono" class="text-danger"></div>
                                 <div th:if="${#fields.hasErrors('telefono')}" class="text-danger">
                                     <p th:errors="*{telefono}"></p>
@@ -116,9 +119,19 @@
                             <!-- Mina en la que trabaja -->
                             <div class="mb-3">
                                 <label class="form-label">Mina en la que trabaja</label>
-                                <input type="text" th:field="*{mina}" class="form-control">
+                                <select th:field="*{mina}" class="form-select" required
+                                    th:disabled="${#lists.isEmpty(minas)}">
+                                    <option value="" disabled selected>
+                                        Selecciona una mina
+                                    </option>
+                                    <option th:each="mina : ${minas}" th:value="${mina}" th:text="${mina.nombre}">
+                                    </option>
+                                </select>
                                 <div th:if="${#fields.hasErrors('mina')}" class="text-danger">
                                     <p th:errors="*{mina}"></p>
+                                </div>
+                                <div th:if="${#lists.isEmpty(minas)}" class="text-danger">
+                                    Debes crear una mina antes de registrar empleados.
                                 </div>
                             </div>
 
@@ -129,7 +142,7 @@
                                     <input type="password" th:field="*{passwordPlano}" class="form-control"
                                         id="passwordPlano" pattern="(?=.*[A-Z])(?=.*\d).{8,20}"
                                         title="Debe tener al menos 8 caracteres, una letra mayúscula y un número"
-                                        required>
+                                        required />
                                     <button class="btn btn-outline-secondary" type="button" id="togglePassword">
                                         <i class="bi bi-eye"></i>
                                     </button>
@@ -141,7 +154,9 @@
 
                             <!-- Botón Guardar -->
                             <div class="d-grid">
-                                <button type="submit" class="btn btn-primary">Guardar</button>
+                                <button type="submit" class="btn btn-primary" th:disabled="${#lists.isEmpty(minas)}">
+                                    Guardar
+                                </button>
                             </div>
                         </form>
 
@@ -159,14 +174,17 @@
 
     <script>
         document.addEventListener("DOMContentLoaded", function () {
-            const togglePassword = document.getElementById('togglePassword');
-            const passwordInput = document.getElementById('passwordPlano');
+            const togglePassword = document.getElementById("togglePassword");
+            const passwordInput = document.getElementById("passwordPlano");
             if (togglePassword && passwordInput) {
-                togglePassword.addEventListener('click', function () {
-                    const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
-                    passwordInput.setAttribute('type', type);
-                    this.querySelector('i').classList.toggle('bi-eye');
-                    this.querySelector('i').classList.toggle('bi-eye-slash');
+                togglePassword.addEventListener("click", function () {
+                    const type =
+                        passwordInput.getAttribute("type") === "password"
+                            ? "text"
+                            : "password";
+                    passwordInput.setAttribute("type", type);
+                    this.querySelector("i").classList.toggle("bi-eye");
+                    this.querySelector("i").classList.toggle("bi-eye-slash");
                 });
             }
         });

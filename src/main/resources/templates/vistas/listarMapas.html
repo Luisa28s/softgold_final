@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{plantillas/principal :: head}"></head>
+
+<body>
+    <header th:replace="~{plantillas/principal :: header}"></header>
+
+    <main class="container mt-5">
+        <h3 class="text-primary">Listado de Mapas</h3>
+        <a th:href="@{/admin/mapas/crear}" class="btn btn-success">Crear nuevo mapa</a>
+        <table class="table table-hover mt-3">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Coordenadas</th>
+                    <th>Descripción</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="mapa : ${mapas}">
+                    <td th:text="${mapa.codigoMapa}"></td>
+                    <td th:text="${mapa.coordenadas}"></td>
+                    <td th:text="${mapa.descripcion}"></td>
+                    <td>
+                        <a th:href="@{/admin/mapas/editar/{id}(id=${mapa.codigoMapa})}"
+                            class="btn btn-sm btn-warning">Editar</a>
+                        <a th:href="@{/admin/mapas/eliminar/{id}(id=${mapa.codigoMapa})}" class="btn btn-sm btn-danger"
+                            onclick="return confirm('¿Seguro que deseas eliminar este mapa?');">Eliminar</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </main>
+
+    <footer th:replace="~{plantillas/principal :: footer}"></footer>
+</body>
+
+</html>

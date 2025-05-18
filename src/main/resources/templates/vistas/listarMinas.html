@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{plantillas/principal :: head}"></head>
+
+<body>
+    <header th:replace="~{plantillas/principal :: header}"></header>
+
+    <main class="container mt-5">
+        <h3 class="text-primary">Listado de Minas</h3>
+        <a th:href="@{/admin/minas/crear}" class="btn btn-success">Crear nueva mina</a>
+        <table class="table table-hover mt-3">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Mina</th>
+                    <th>Departamento</th>
+                    <th>Coordenadas de Mapa</th>
+                    <th>Descripción</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="mina : ${minas}">
+                    <td th:text="${mina.codMina}"></td>
+                    <td th:text="${mina.nombre}"></td>
+                    <td th:text="${mina.departamento}"></td>
+                    <td>
+                        <span th:each="mapa : ${mina.mapas}">
+                            <span th:text="${mapa.coordenadas}"></span><br>
+                        </span>
+                    </td>
+                    <td>
+                        <span th:each="mapa : ${mina.mapas}">
+                            <span th:text="${mapa.descripcion}"></span><br>
+                        </span>
+                    </td>
+                    <td>
+                        <a th:href="@{/admin/minas/editar/{id}(id=${mina.codMina})}"
+                            class="btn btn-sm btn-warning">Editar</a>
+                        <a th:href="@{/admin/minas/eliminar/{id}(id=${mina.codMina})}" class="btn btn-sm btn-danger"
+                            onclick="return confirm('¿Seguro que deseas eliminar esta mina?');">Eliminar</a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </main>
+
+    <footer th:replace="~{plantillas/principal :: footer}"></footer>
+</body>
+
+</html>

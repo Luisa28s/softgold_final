@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="~{plantillas/principal :: head}"></head>
+
+<body>
+    <header th:replace="~{plantillas/principal :: header}"></header>
+    <main class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card shadow">
+                    <div class="card-header text-center">
+                        <h4 class="text-primary">Crear Mina</h4>
+                    </div>
+                    <div class="card-body">
+                        <form th:action="@{/admin/minas/crear}" th:object="${mina}" method="post">
+                            <div class="mb-3">
+                                <label class="form-label">Nombre</label>
+                                <input type="text" th:field="*{nombre}" class="form-control" required>
+                                <div th:if="${#fields.hasErrors('nombre')}" class="text-danger">
+                                    <p th:errors="*{nombre}"></p>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Departamento</label>
+                                <input type="text" th:field="*{departamento}" class="form-control" required>
+                                <div th:if="${#fields.hasErrors('departamento')}" class="text-danger">
+                                    <p th:errors="*{departamento}"></p>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label">Mapas asociados</label>
+                                <select th:field="*{mapas}" class="form-select" multiple required
+                                    th:disabled="${#lists.isEmpty(mapas)}">
+                                    <option th:each="mapa : ${mapas}" th:value="${mapa.codigoMapa}"
+                                        th:text="${mapa.coordenadas}"></option>
+                                </select>
+                                <div th:if="${#lists.isEmpty(mapas)}" class="text-danger">
+                                    Debes crear al menos un mapa antes de asociarlo a una mina.
+                                </div>
+                            </div>
+                            <div class="d-grid">
+                                <button type="submit" class="btn btn-primary">Guardar</button>
+                            </div>
+                        </form>
+                        <div class="mt-3 text-center">
+                            <a th:href="@{/admin/minas}" class="btn btn-link text-secondary">Volver al listado</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+    <footer th:replace="~{plantillas/principal :: footer}"></footer>
+</body>
+
+</html>

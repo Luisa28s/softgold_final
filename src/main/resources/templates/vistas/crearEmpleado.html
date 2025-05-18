@@ -130,9 +130,17 @@
                             <!-- Mina en la que trabaja -->
                             <div class="mb-3">
                                 <label class="form-label">Mina en la que trabaja</label>
-                                <input type="text" th:field="*{mina}" class="form-control">
+                                <select th:field="*{mina}" class="form-select" required
+                                    th:disabled="${#lists.isEmpty(minas)}">
+                                    <option value="" disabled selected>Selecciona una mina</option>
+                                    <option th:each="mina : ${minas}" th:value="${mina}" th:text="${mina.nombre}">
+                                    </option>
+                                </select>
                                 <div th:if="${#fields.hasErrors('mina')}" class="text-danger">
                                     <p th:errors="*{mina}"></p>
+                                </div>
+                                <div th:if="${#lists.isEmpty(minas)}" class="text-danger">
+                                    Debes crear una mina antes de registrar empleados.
                                 </div>
                             </div>
 
@@ -155,7 +163,8 @@
 
                             <!-- Botón Guardar -->
                             <div class="d-grid">
-                                <button type="submit" class="btn btn-primary">Guardar</button>
+                                <button type="submit" class="btn btn-primary"
+                                    th:disabled="${#lists.isEmpty(minas)}">Guardar</button>
                             </div>
                         </form>
 

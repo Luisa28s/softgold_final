@@ -3,6 +3,7 @@ package com.proyectoL.softgold.controller;
 import com.proyectoL.softgold.model.Rol;
 import com.proyectoL.softgold.model.Usuario;
 import com.proyectoL.softgold.repository.UsuarioDAO;
+import com.proyectoL.softgold.repository.MinaDAO;
 import com.proyectoL.softgold.repository.RolDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -31,6 +32,9 @@ public class EmpleadoController {
     @Autowired
     private PasswordEncoder passwordEncoder;
 
+    @Autowired
+    private MinaDAO minaDAO;
+
     // Listar empleados
     @GetMapping("")
     public String listarEmpleados(Model model) {
@@ -47,6 +51,7 @@ public class EmpleadoController {
         usuario.setTipoUsuario("EMPLEADO");
         model.addAttribute("usuario", usuario);
         model.addAttribute("titulo", "Crear Empleado");
+        model.addAttribute("minas", minaDAO.findAll());
         return "vistas/crearEmpleado";
     }
 

@@ -42,8 +42,13 @@ public class VistaController {
             case "inicio":
             case "Inicio":
                 return "redirect:/inicio";
+            case "mapas":
+            case "Mapas":
+                return "redirect:/mapas";
+            case "minas":
+            case "Minas":
+                return "redirect:/minas";
             default:
-                // Si no se encuentra una coincidencia, mostrar un mensaje de error
                 redirectAttrs.addFlashAttribute("error", "No se encontró la sección solicitada.");
                 return "redirect:/";
         }
@@ -54,5 +59,15 @@ public class VistaController {
                 .map(GrantedAuthority::getAuthority)
                 .findFirst()
                 .orElse("SIN ROL");
+    }
+
+    @GetMapping("/mapas")
+    public String vistaMapas() {
+        return "redirect:/admin/mapas";
+    }
+
+    @GetMapping("/minas")
+    public String vistaMinas() {
+        return "redirect:/admin/minas";
     }
 }

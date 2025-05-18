@@ -4,6 +4,7 @@ import com.proyectoL.softgold.model.Rol;
 import com.proyectoL.softgold.model.Usuario;
 import com.proyectoL.softgold.repository.UsuarioDAO;
 import com.proyectoL.softgold.repository.RolDAO;
+import com.proyectoL.softgold.repository.MinaDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -26,9 +27,11 @@ public class MineroController {
 
     @Autowired
     private RolDAO rolDAO;
-
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    private MinaDAO minaDAO;
 
     // Listar mineros
     @GetMapping("")
@@ -46,6 +49,8 @@ public class MineroController {
         usuario.setTipoUsuario("MINERO");
         model.addAttribute("usuario", usuario);
         model.addAttribute("titulo", "Crear Minero");
+        model.addAttribute("minas", minaDAO.findAll());
+
         return "vistas/crearMinero";
     }
 

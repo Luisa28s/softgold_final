@@ -76,8 +76,9 @@ public class Usuario implements UserDetails {
     @Column(name = "telefono")
     private String telefono; // Asegúrate de que el tipo sea String
 
-    @Column(name = "mina")
-    private String mina; // Asegúrate de que el tipo sea String
+    @ManyToOne
+    @JoinColumn(name = "codigo_mina")
+    private Mina mina; // Asegúrate de que el tipo sea String
 
     @Column(name = "tipo_empleado")
     private String tipoEmpleado; // Asegúrate de que el tipo sea String
@@ -213,11 +214,11 @@ public class Usuario implements UserDetails {
         this.telefono = telefono;
     }
 
-    public String getMina() {
+    public Mina getMina() {
         return mina;
     }
 
-    public void setMina(String mina) {
+    public void setMina(Mina mina) {
         this.mina = mina;
     }
 
