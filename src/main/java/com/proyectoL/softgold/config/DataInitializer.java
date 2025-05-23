@@ -55,7 +55,7 @@ public class DataInitializer {
             admin.setNombre1("Admin");
             admin.setNombre2("Default");
             admin.setApellido1("Softgold");
-            admin.setApellido2("Default"); // Asignar un valor predeterminado
+            admin.setApellido2("Default");
             admin.setEmail("admin@softgold.com");
             admin.setPassword(passwordEncoder.encode("admin123"));
             admin.setTipoUsuario("ADMINISTRADOR");

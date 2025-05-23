@@ -12,7 +12,7 @@
             <div class="col-md-8">
                 <div class="card shadow">
                     <div class="card-header text-center">
-                        <h4 class="text-primary">editar Minero</h4>
+                        <h4 class="text-primary">Editar Minero</h4>
                     </div>
                     <div class="card-body">
                         <form th:action="@{/admin/usuarios/mineros/editar/{id}(id=${usuario.id})}"
@@ -109,19 +109,17 @@
                             <!-- Mina en la que trabaja -->
                             <div class="mb-3">
                                 <label class="form-label">Mina en la que trabaja</label>
-                                <select th:field="*{mina}" class="form-select" required
-                                    th:disabled="${#lists.isEmpty(minas)}">
+                                <select th:field="*{mina}" class="form-select" required>
                                     <option value="" disabled selected>Selecciona una mina</option>
-                                    <option th:each="mina : ${minas}" th:value="${mina}" th:text="${mina.nombre}">
+                                    <option th:each="mina : ${minas}" th:value="${mina.codMina}"
+                                        th:text="${mina.nombre}">
                                     </option>
                                 </select>
                                 <div th:if="${#fields.hasErrors('mina')}" class="text-danger">
                                     <p th:errors="*{mina}"></p>
                                 </div>
-                                <div th:if="${#lists.isEmpty(minas)}" class="text-danger">
-                                    Debes crear una mina antes de registrar empleados.
-                                </div>
                             </div>
+
 
                             <!-- Contraseña -->
                             <div class="mb-3">

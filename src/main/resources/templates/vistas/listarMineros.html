@@ -33,7 +33,8 @@
           <td th:text="${usuario.tipoDocumento}"></td>
           <td th:text="${usuario.cedula}"></td>
           <td th:text="${usuario.email}"></td>
-          <td th:text="${usuario.mina}"></td>
+          <td th:text="${usuario.mina != null ? usuario.mina.nombre : 'Sin asignar'}">
+          </td>
           <td>
             <a th:href="@{/admin/usuarios/mineros/editar/{id}(id=${usuario.id})}"
               class="btn btn-warning btn-sm">Editar</a>

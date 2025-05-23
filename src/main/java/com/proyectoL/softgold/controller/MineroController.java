@@ -57,11 +57,13 @@ public class MineroController {
     // Procesar la creación de un minero
     @PostMapping("/crear")
     public String crearMinero(
-            @Valid @ModelAttribute("usuario") Usuario usuario, // <-- Agrega @Valid aquí
+            @Valid @ModelAttribute("usuario") Usuario usuario,
             BindingResult result,
             RedirectAttributes redirectAttrs,
             Model model) {
         if (result.hasErrors()) {
+            model.addAttribute("minas", minaDAO.findAll());
+            model.addAttribute("titulo", "Crear Minero");
             return "vistas/crearMinero";
         }
 
@@ -73,11 +75,15 @@ public class MineroController {
 
         if (usuarioDAO.existsByCedula(usuario.getCedula())) {
             model.addAttribute("errorCedula", "Ya existe un usuario con la cédula ingresada.");
+            model.addAttribute("minas", minaDAO.findAll());
+            model.addAttribute("titulo", "Crear Minero");
             return "vistas/crearMinero";
         }
 
         if (usuarioDAO.existsByEmail(usuario.getEmail())) {
             model.addAttribute("errorEmail", "Ya existe un usuario con el correo ingresado.");
+            model.addAttribute("minas", minaDAO.findAll());
+            model.addAttribute("titulo", "Crear Minero");
             return "vistas/crearMinero";
         }
 

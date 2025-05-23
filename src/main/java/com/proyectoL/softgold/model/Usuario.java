@@ -51,7 +51,7 @@ public class Usuario implements UserDetails {
 
     @Transient
     @Pattern(regexp = "^(?=.*[A-Z])(?=.*\\d).{8,20}$", message = "La contraseña debe tener al menos 8 caracteres, una letra mayúscula y un número")
-    private String passwordPlano; // Campo solo para entrada y validación
+    private String passwordPlano;
 
     @Column(nullable = false)
     private String password;
@@ -74,19 +74,18 @@ public class Usuario implements UserDetails {
     private String tipoUsuario;
 
     @Column(name = "telefono")
-    private String telefono; // Asegúrate de que el tipo sea String
+    private String telefono;
 
     @ManyToOne
-    @JoinColumn(name = "codigo_mina")
-    private Mina mina; // Asegúrate de que el tipo sea String
+    @JoinColumn(name = "cod_mina")
+    private Mina mina;
 
     @Column(name = "tipo_empleado")
-    private String tipoEmpleado; // Asegúrate de que el tipo sea String
+    private String tipoEmpleado;
 
     @Column(name = "area")
-    private String area; // Asegúrate de que el tipo sea String
+    private String area;
 
-    // Constructores
     public Usuario() {
         this.intentosFallidos = 0;
         this.bloqueado = false;
