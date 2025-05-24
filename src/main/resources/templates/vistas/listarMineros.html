@@ -7,8 +7,26 @@
   <header th:replace="~{plantillas/principal :: header}"></header>
 
   <main class="container mt-5">
-    <h3 class="text-primary">Gestión de Mineros</h3>
-    <a th:href="@{/admin/usuarios/mineros/crear}" class="btn btn-success">Nuevo Minero</a>
+    <h3 class="text-success fw-bold">Gestión de Mineros</h3>
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <a th:href="@{/admin/usuarios/mineros/crear}" class="btn btn-success">
+        <i class="bi bi-person-plus"></i> Nuevo Minero
+      </a>
+      <div class="d-flex align-items-center">
+        <!-- Formulario de búsqueda -->
+        <form class="d-flex" th:action="@{/admin/usuarios/mineros/buscar}" method="get">
+          <input class="form-control me-2" type="search" name="cedula" placeholder="Buscar por documento"
+            aria-label="Buscar" th:value="${param.cedula}">
+          <button class="btn btn-outline-success" type="submit"><i class="bi bi-search"></i></button>
+        </form>
+        <!-- Botón Ver todos -->
+        <div th:if="${param.cedula != null and param.cedula != ''}" class="ms-2">
+          <a th:href="@{/admin/usuarios/mineros}" class="btn btn-outline-secondary btn-sm">
+            <i class="bi bi-arrow-counterclockwise"></i> Ver todos
+          </a>
+        </div>
+      </div>
+    </div>
     <table class="table table-hover mt-3">
       <thead>
         <tr>
@@ -23,7 +41,7 @@
       </thead>
       <tbody>
         <tr th:if="${listaUsuarios == null or listaUsuarios.size() == 0}">
-          <td colspan="6" class="text-center">No hay mineros registrados.</td>
+          <td colspan="7" class="text-center">No hay mineros registrados.</td>
         </tr>
         <tr th:each="usuario : ${listaUsuarios}" th:if="${listaUsuarios != null}">
           <td th:text="${usuario.id}"></td>
@@ -33,13 +51,16 @@
           <td th:text="${usuario.tipoDocumento}"></td>
           <td th:text="${usuario.cedula}"></td>
           <td th:text="${usuario.email}"></td>
-          <td th:text="${usuario.mina != null ? usuario.mina.nombre : 'Sin asignar'}">
-          </td>
+          <td th:text="${usuario.mina != null ? usuario.mina.nombre : 'Sin asignar'}"></td>
           <td>
-            <a th:href="@{/admin/usuarios/mineros/editar/{id}(id=${usuario.id})}"
-              class="btn btn-warning btn-sm">Editar</a>
-            <a th:href="@{/admin/usuarios/mineros/eliminar/{id}(id=${usuario.id})}" class="btn btn-danger btn-sm"
-              onclick="return confirm('¿Seguro que deseas eliminar este usuario?')">Eliminar</a>
+            <a th:href="@{/admin/usuarios/mineros/editar/{id}(id=${usuario.id})}" class="text-warning me-2"
+              title="Editar">
+              <i class="bi bi-pencil-square"></i>
+            </a>
+            <a th:href="@{/admin/usuarios/mineros/eliminar/{id}(id=${usuario.id})}" class="text-danger" title="Eliminar"
+              onclick="return confirm('¿Seguro que deseas eliminar este usuario?')">
+              <i class="bi bi-trash"></i>
+            </a>
           </td>
         </tr>
       </tbody>

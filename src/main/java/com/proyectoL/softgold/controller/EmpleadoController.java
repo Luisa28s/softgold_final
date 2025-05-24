@@ -64,21 +64,27 @@ public class EmpleadoController {
             RedirectAttributes redirectAttrs) {
 
         if (result.hasErrors()) {
+            model.addAttribute("minas", minaDAO.findAll());
+            model.addAttribute("titulo", "Crear Empleado");
             return "vistas/crearEmpleado";
         }
 
         Rol rolEmpleado = rolDAO.findByNombre("EMPLEADO");
         if (rolEmpleado == null) {
-            model.addAttribute("error", "El rol 'EMPLEADO' no existe en la base de datos.");
-            return "vistas/crearEmpleado";
+            redirectAttrs.addFlashAttribute("error", "El rol 'EMPLEADO' no existe en la base de datos.");
+            return "redirect:/admin/usuarios/empleados";
         }
 
         if (usuarioDAO.existsByCedula(usuario.getCedula())) {
+            model.addAttribute("minas", minaDAO.findAll());
+            model.addAttribute("titulo", "Crear Empleado");
             model.addAttribute("errorCedula", "Ya existe un empleado con la cédula ingresada.");
             return "vistas/crearEmpleado";
         }
 
         if (usuarioDAO.existsByEmail(usuario.getEmail())) {
+            model.addAttribute("minas", minaDAO.findAll());
+            model.addAttribute("titulo", "Crear Empleado");
             model.addAttribute("errorEmail", "Ya existe un empleado con el correo ingresado.");
             return "vistas/crearEmpleado";
         }
@@ -105,6 +111,8 @@ public class EmpleadoController {
 
         model.addAttribute("usuario", usuarioOpt.get());
         model.addAttribute("titulo", "Editar Empleado");
+        model.addAttribute("minas", minaDAO.findAll()); // <-- agrega esto
+
         return "vistas/editarEmpleado";
     }
 
@@ -114,9 +122,13 @@ public class EmpleadoController {
             @PathVariable Long id,
             @Valid @ModelAttribute("usuario") Usuario usuario,
             BindingResult result,
+            Model model,
             RedirectAttributes redirectAttrs) {
 
         if (result.hasErrors()) {
+            model.addAttribute("usuario", usuario);
+            model.addAttribute("titulo", "Editar Empleado");
+            model.addAttribute("minas", minaDAO.findAll());
             return "vistas/editarEmpleado";
         }
 
@@ -156,6 +168,21 @@ public class EmpleadoController {
         usuarioDAO.deleteById(id);
         redirectAttrs.addFlashAttribute("exito", "Empleado eliminado correctamente.");
         return "redirect:/admin/usuarios/empleados";
+    }
+
+    // Buscar empleados por cédula
+    @GetMapping("/buscar")
+    public String buscarEmpleadosPorCedula(@RequestParam("cedula") String cedula, Model model) {
+        List<Usuario> empleados;
+        if (cedula == null || cedula.trim().isEmpty()) {
+            empleados = usuarioDAO.findByTipoUsuario("EMPLEADO");
+        } else {
+            Usuario empleado = usuarioDAO.findByCedulaAndTipoUsuario(cedula, "EMPLEADO");
+            empleados = empleado != null ? List.of(empleado) : List.of();
+        }
+        model.addAttribute("listaUsuarios", empleados);
+        model.addAttribute("tipoUsuario", "EMPLEADO");
+        return "vistas/listarEmpleados";
     }
 
 }

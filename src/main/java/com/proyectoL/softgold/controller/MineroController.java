@@ -162,4 +162,19 @@ public class MineroController {
         return "redirect:/admin/usuarios/mineros";
     }
 
+    // Buscar mineros por cédula
+    @GetMapping("/buscar")
+    public String buscarMinerosPorCedula(@RequestParam("cedula") String cedula, Model model) {
+        List<Usuario> mineros;
+        if (cedula == null || cedula.trim().isEmpty()) {
+            mineros = usuarioDAO.findByTipoUsuario("MINERO");
+        } else {
+            Usuario minero = usuarioDAO.findByCedulaAndTipoUsuario(cedula, "MINERO");
+            mineros = minero != null ? List.of(minero) : List.of();
+        }
+        model.addAttribute("listaUsuarios", mineros);
+        model.addAttribute("tipoUsuario", "MINERO");
+        return "vistas/listarMineros";
+    }
+
 }

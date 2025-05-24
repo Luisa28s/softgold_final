@@ -16,13 +16,13 @@
                         <form th:action="@{/admin/mapas/editar/{id}(id=${mapa.codigoMapa})}" th:object="${mapa}"
                             method="post">
                             <div class="mb-3">
-                                <label class="form-label">Coordenadas</label>
+                                <label class="form-label">Coordenadas<span class="text-danger">*</span></label>
                                 <input type="text" th:field="*{coordenadas}" class="form-control" required>
                                 <div th:if="${#fields.hasErrors('coordenadas')}" class="text-danger">
                                     <p th:errors="*{coordenadas}"></p>
                                 </div>
                                 <div class="mb-3">
-                                    <label class="form-label">Descripción</label>
+                                    <label class="form-label">Descripción<span class="text-danger">*</span></label>
                                     <input type="text" th:field="*{descripcion}" class="form-control" required>
                                     <div th:if="${#fields.hasErrors('descripcion')}" class="text-danger">
                                         <p th:errors="*{descripcion}"></p>

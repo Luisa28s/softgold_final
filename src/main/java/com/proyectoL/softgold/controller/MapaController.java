@@ -70,4 +70,17 @@ public class MapaController {
         return "redirect:/admin/mapas";
     }
 
+    @GetMapping("/buscar")
+    public String buscarMapasPorDescripcion(
+            @org.springframework.web.bind.annotation.RequestParam("descripcion") String descripcion, Model model) {
+        java.util.List<Mapa> mapas;
+        if (descripcion == null || descripcion.trim().isEmpty()) {
+            mapas = mapaDAO.findAll();
+        } else {
+            mapas = mapaDAO.findByDescripcionContainingIgnoreCase(descripcion);
+        }
+        model.addAttribute("mapas", mapas);
+        return "vistas/listarMapas";
+    }
+
 }

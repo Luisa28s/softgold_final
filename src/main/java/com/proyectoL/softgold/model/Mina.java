@@ -36,7 +36,7 @@ public class Mina {
 
     // Relación N:M con Mapa
     @ManyToMany
-    @JoinTable(name = "mina_mapa", joinColumns = @JoinColumn(name = "cod_mina"), inverseJoinColumns = @JoinColumn(name = "codigo_mapa"))
+    @JoinTable(name = "mina_mapa", joinColumns = @JoinColumn(name = "codigo_mina"), inverseJoinColumns = @JoinColumn(name = "codigo_mapa"))
     private List<Mapa> mapas;
 
     public Long getCodMina() {

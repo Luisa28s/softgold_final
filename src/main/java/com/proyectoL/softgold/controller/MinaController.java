@@ -11,6 +11,7 @@ import com.proyectoL.softgold.repository.MinaDAO;
 import com.proyectoL.softgold.repository.MapaDAO;
 
 import jakarta.validation.Valid;
+import java.util.List;
 
 @Controller
 @RequestMapping("/admin/minas")
@@ -71,5 +72,17 @@ public class MinaController {
     public String eliminarMina(@PathVariable Long id) {
         minaDAO.deleteById(id);
         return "redirect:/admin/minas";
+    }
+
+    @GetMapping("/buscar")
+    public String buscarMinasPorDepartamento(@RequestParam("departamento") String departamento, Model model) {
+        List<Mina> minas;
+        if (departamento == null || departamento.trim().isEmpty()) {
+            minas = minaDAO.findAll();
+        } else {
+            minas = minaDAO.findByDepartamentoContainingIgnoreCase(departamento);
+        }
+        model.addAttribute("minas", minas);
+        return "vistas/listarMinas";
     }
 }

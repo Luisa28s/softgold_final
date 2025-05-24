@@ -15,21 +15,21 @@
                     <div class="card-body">
                         <form th:action="@{/admin/minas/crear}" th:object="${mina}" method="post">
                             <div class="mb-3">
-                                <label class="form-label">Nombre</label>
+                                <label class="form-label">Nombre<span class="text-danger">*</span></label>
                                 <input type="text" th:field="*{nombre}" class="form-control" required>
                                 <div th:if="${#fields.hasErrors('nombre')}" class="text-danger">
                                     <p th:errors="*{nombre}"></p>
                                 </div>
                             </div>
                             <div class="mb-3">
-                                <label class="form-label">Departamento</label>
+                                <label class="form-label">Departamento<span class="text-danger">*</span></label>
                                 <input type="text" th:field="*{departamento}" class="form-control" required>
                                 <div th:if="${#fields.hasErrors('departamento')}" class="text-danger">
                                     <p th:errors="*{departamento}"></p>
                                 </div>
                             </div>
                             <div class="mb-3">
-                                <label class="form-label">Mapas asociados</label>
+                                <label class="form-label">Elija las coordenadas al mapa asociado</label>
                                 <select th:field="*{mapas}" class="form-select" multiple required
                                     th:disabled="${#lists.isEmpty(mapas)}">
                                     <option th:each="mapa : ${mapas}" th:value="${mapa.codigoMapa}"

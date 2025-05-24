@@ -5,10 +5,25 @@
 
 <body>
     <header th:replace="~{plantillas/principal :: header}"></header>
-
     <main class="container mt-5">
         <h3 class="text-primary">Listado de Minas</h3>
-        <a th:href="@{/admin/minas/crear}" class="btn btn-success">Crear nueva mina</a>
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <a th:href="@{/admin/minas/crear}" class="btn btn-success">
+                <i class="bi bi-plus-circle"></i> Nueva mina
+            </a>
+            <div class="d-flex align-items-center">
+                <form class="d-flex" th:action="@{/admin/minas/buscar}" method="get">
+                    <input class="form-control me-2" type="search" name="departamento"
+                        placeholder="Buscar por departamento" aria-label="Buscar" th:value="${param.departamento}">
+                    <button class="btn btn-outline-success" type="submit"><i class="bi bi-search"></i></button>
+                </form>
+                <div th:if="${param.departamento != null and param.departamento != ''}" class="ms-2">
+                    <a th:href="@{/admin/minas}" class="btn btn-outline-secondary btn-sm">
+                        <i class="bi bi-arrow-counterclockwise"></i> Ver todos
+                    </a>
+                </div>
+            </div>
+        </div>
         <table class="table table-hover mt-3">
             <thead>
                 <tr>
@@ -36,16 +51,22 @@
                         </span>
                     </td>
                     <td>
-                        <a th:href="@{/admin/minas/editar/{id}(id=${mina.codMina})}"
-                            class="btn btn-sm btn-warning">Editar</a>
-                        <a th:href="@{/admin/minas/eliminar/{id}(id=${mina.codMina})}" class="btn btn-sm btn-danger"
-                            onclick="return confirm('¿Seguro que deseas eliminar esta mina?');">Eliminar</a>
+                        <a th:href="@{/admin/minas/editar/{id}(id=${mina.codMina})}" class="text-warning me-2"
+                            title="Editar">
+                            <i class="bi bi-pencil-square"></i>
+                        </a>
+                        <a th:href="@{/admin/minas/eliminar/{id}(id=${mina.codMina})}" class="text-danger"
+                            title="Eliminar" onclick="return confirm('¿Seguro que deseas eliminar esta mina?');">
+                            <i class="bi bi-trash"></i>
+                        </a>
                     </td>
+                </tr>
+                <tr th:if="${minas == null or minas.size() == 0}">
+                    <td colspan="6" class="text-center">No hay minas registradas.</td>
                 </tr>
             </tbody>
         </table>
     </main>
-
     <footer th:replace="~{plantillas/principal :: footer}"></footer>
 </body>
 

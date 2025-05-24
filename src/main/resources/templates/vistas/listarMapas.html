@@ -5,10 +5,25 @@
 
 <body>
     <header th:replace="~{plantillas/principal :: header}"></header>
-
     <main class="container mt-5">
         <h3 class="text-primary">Listado de Mapas</h3>
-        <a th:href="@{/admin/mapas/crear}" class="btn btn-success">Crear nuevo mapa</a>
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <a th:href="@{/admin/mapas/crear}" class="btn btn-success">
+                <i class="bi bi-plus-circle"></i> Nuevo mapa
+            </a>
+            <div class="d-flex align-items-center">
+                <form class="d-flex" th:action="@{/admin/mapas/buscar}" method="get">
+                    <input class="form-control me-2" type="search" name="descripcion"
+                        placeholder="Buscar por descripción" aria-label="Buscar" th:value="${param.descripcion}">
+                    <button class="btn btn-outline-success" type="submit"><i class="bi bi-search"></i></button>
+                </form>
+                <div th:if="${param.descripcion != null and param.descripcion != ''}" class="ms-2">
+                    <a th:href="@{/admin/mapas}" class="btn btn-outline-secondary btn-sm">
+                        <i class="bi bi-arrow-counterclockwise"></i> Ver todos
+                    </a>
+                </div>
+            </div>
+        </div>
         <table class="table table-hover mt-3">
             <thead>
                 <tr>
@@ -24,16 +39,22 @@
                     <td th:text="${mapa.coordenadas}"></td>
                     <td th:text="${mapa.descripcion}"></td>
                     <td>
-                        <a th:href="@{/admin/mapas/editar/{id}(id=${mapa.codigoMapa})}"
-                            class="btn btn-sm btn-warning">Editar</a>
-                        <a th:href="@{/admin/mapas/eliminar/{id}(id=${mapa.codigoMapa})}" class="btn btn-sm btn-danger"
-                            onclick="return confirm('¿Seguro que deseas eliminar este mapa?');">Eliminar</a>
+                        <a th:href="@{/admin/mapas/editar/{id}(id=${mapa.codigoMapa})}" class="text-warning me-2"
+                            title="Editar">
+                            <i class="bi bi-pencil-square"></i>
+                        </a>
+                        <a th:href="@{/admin/mapas/eliminar/{id}(id=${mapa.codigoMapa})}" class="text-danger"
+                            onclick="return confirm('¿Seguro que deseas eliminar este mapa?');" title="Eliminar">
+                            <i class="bi bi-trash"></i>
+                        </a>
                     </td>
+                </tr>
+                <tr th:if="${mapas == null or mapas.size() == 0}">
+                    <td colspan="4" class="text-center">No hay mapas registrados.</td>
                 </tr>
             </tbody>
         </table>
     </main>
-
     <footer th:replace="~{plantillas/principal :: footer}"></footer>
 </body>
 
