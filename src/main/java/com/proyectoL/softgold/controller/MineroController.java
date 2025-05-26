@@ -39,6 +39,8 @@ public class MineroController {
         List<Usuario> mineros = usuarioDAO.findByTipoUsuario("MINERO");
         model.addAttribute("listaUsuarios", mineros);
         model.addAttribute("tipoUsuario", "MINERO");
+        model.addAttribute("activePage", "mineros");
+
         return "vistas/listarMineros";
     }
 
@@ -50,6 +52,7 @@ public class MineroController {
         model.addAttribute("usuario", usuario);
         model.addAttribute("titulo", "Crear Minero");
         model.addAttribute("minas", minaDAO.findAll());
+        model.addAttribute("activePage", "mineros");
 
         return "vistas/crearMinero";
     }
@@ -100,16 +103,16 @@ public class MineroController {
 
     // Mostrar formulario para editar un minero
     @GetMapping("/editar/{id}")
-    public String mostrarFormularioEditarMinero(@PathVariable Long id, Model model,
-            RedirectAttributes redirectAttrs) {
+    public String mostrarFormularioEditarMinero(@PathVariable Long id, Model model, RedirectAttributes redirectAttrs) {
         Optional<Usuario> usuarioOpt = usuarioDAO.findById(id);
         if (usuarioOpt.isEmpty() || !usuarioOpt.get().getTipoUsuario().equals("MINERO")) {
             redirectAttrs.addFlashAttribute("error", "Minero no encontrado.");
             return "redirect:/admin/usuarios/mineros";
         }
-
         model.addAttribute("usuario", usuarioOpt.get());
         model.addAttribute("titulo", "Editar Minero");
+        model.addAttribute("minas", minaDAO.findAll()); // SIEMPRE enviar minas
+        model.addAttribute("activePage", "mineros");
         return "vistas/editarMinero";
     }
 
@@ -119,9 +122,13 @@ public class MineroController {
             @PathVariable Long id,
             @Valid @ModelAttribute("usuario") Usuario usuario,
             BindingResult result,
-            RedirectAttributes redirectAttrs) {
+            RedirectAttributes redirectAttrs,
+            Model model) {
 
         if (result.hasErrors()) {
+            model.addAttribute("minas", minaDAO.findAll());
+            model.addAttribute("titulo", "Editar Minero");
+            model.addAttribute("activePage", "mineros");
             return "vistas/editarMinero";
         }
 
@@ -174,6 +181,8 @@ public class MineroController {
         }
         model.addAttribute("listaUsuarios", mineros);
         model.addAttribute("tipoUsuario", "MINERO");
+        model.addAttribute("activePage", "mineros");
+
         return "vistas/listarMineros";
     }
 

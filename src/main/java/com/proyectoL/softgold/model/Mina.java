@@ -97,4 +97,16 @@ public class Mina {
                 + usuarios + ", mapas=" + mapas + "]";
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Mina mina = (Mina) o;
+        return codMina != null && codMina.equals(mina.getCodMina());
+    }
+
+    @Override
+    public int hashCode() {
+        return java.util.Objects.hash(codMina);
+    }
 }

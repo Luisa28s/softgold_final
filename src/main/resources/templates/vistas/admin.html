@@ -9,26 +9,33 @@
     <main class="container mt-5">
         <!-- Perfil de administrador -->
         <div class="row justify-content-center mb-4">
-            <div class="col-lg-6 col-md-8">
+            <div class="col-lg-5 col-md-7">
                 <div class="card shadow-sm border-0 position-relative">
-                    <!-- Botón configurar perfil en la esquina -->
-                    <a th:href="@{/admin/perfil}"
-                        class="btn btn-outline-primary btn-sm position-absolute top-0 end-0 m-2" style="z-index:2;">
-                        <i class="bi bi-gear"></i>
-                    </a>
-                    <div class="card-body d-flex align-items-center">
-                        <div class="me-3">
-                            <i class="bi bi-person-circle text-primary" style="font-size: 3rem;"></i>
+                    <!-- Botones configuración y cerrar sesión -->
+                    <div class="position-absolute top-0 end-0 m-2 d-flex gap-2" style="z-index:2;">
+                        <a th:href="@{/admin/perfil}" class="btn btn-outline-primary btn-sm px-2 py-1">
+                            <i class="bi bi-gear"></i>
+                        </a>
+                        <a th:href="@{/logout}" class="btn btn-outline-danger btn-sm px-2 py-1">
+                            <i class="bi bi-box-arrow-right"></i>
+                        </a>
+                    </div>
+                    <div class="card-body d-flex align-items-center py-2">
+                        <div class="me-2">
+                            <i class="bi bi-person-circle text-primary" style="font-size: 2.2rem;"></i>
                         </div>
                         <div>
-                            <h5 class="mb-1 fw-bold">Bienvenido, <span th:text="${usuario.nombre1}"></span></h5>
+                            <h6 class="mb-0 fw-bold" style="font-size: 1.1rem;">
+                                Bienvenido, <span th:text="${usuario.nombre1}"></span>
+                            </h6>
                             <span class="text-muted small">
                                 <i class="bi bi-envelope"></i>
                                 <span th:text="${usuario.email}">correo@ejemplo.com</span>
                             </span>
-                            <div class="mt-1">
-                                <span class="badge bg-success">Rol: <span
-                                        th:text="${usuario.roles[0].nombre}"></span></span>
+                            <div>
+                                <span class="badge bg-success" style="font-size: 0.8rem;">
+                                    Rol: <span th:text="${usuario.roles[0].nombre}"></span>
+                                </span>
                             </div>
                         </div>
                     </div>
