@@ -66,7 +66,14 @@ public class MapaController {
 
     @GetMapping("/eliminar/{id}")
     public String eliminarMapa(@PathVariable Long id) {
-        mapaDAO.deleteById(id);
+        Mapa mapa = mapaDAO.findById(id).orElse(null);
+        if (mapa != null) {
+
+            mapa.getMinas().forEach(mina -> mina.getMapas().remove(mapa));
+            mapa.getMinas().clear();
+            mapaDAO.save(mapa);
+            mapaDAO.deleteById(id);
+        }
         return "redirect:/admin/mapas";
     }
 

@@ -14,7 +14,10 @@
                     </div>
                     <div class="card-body">
                         <form th:action="@{/admin/minas/crear}" th:object="${mina}" method="post">
+
                             <div class="mb-3">
+                                <input type="hidden" th:field="*{codMina}" />
+
                                 <label class="form-label">Nombre<span class="text-danger">*</span></label>
                                 <input type="text" th:field="*{nombre}" class="form-control" required>
                                 <div th:if="${#fields.hasErrors('nombre')}" class="text-danger">

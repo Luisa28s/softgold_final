@@ -36,7 +36,7 @@ public class Mina {
 
     // Relación N:M con Mapa
     @ManyToMany
-    @JoinTable(name = "mina_mapa", joinColumns = @JoinColumn(name = "codigo_mina"), inverseJoinColumns = @JoinColumn(name = "codigo_mapa"))
+    @JoinTable(name = "mina_mapa", joinColumns = @JoinColumn(name = "Codigo_Mina"), inverseJoinColumns = @JoinColumn(name = "Codigo_Mapa"))
     private List<Mapa> mapas;
 
     public Long getCodMina() {
@@ -93,14 +93,15 @@ public class Mina {
 
     @Override
     public String toString() {
-        return "Mina [codMina=" + codMina + ", nombre=" + nombre + ", departamento=" + departamento + ", usuarios="
-                + usuarios + ", mapas=" + mapas + "]";
+        return "Mina [codMina=" + codMina + ", nombre=" + nombre + ", departamento=" + departamento + "]";
     }
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (this == o)
+            return true;
+        if (o == null || getClass() != o.getClass())
+            return false;
         Mina mina = (Mina) o;
         return codMina != null && codMina.equals(mina.getCodMina());
     }

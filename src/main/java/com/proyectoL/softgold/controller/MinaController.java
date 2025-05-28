@@ -63,14 +63,27 @@ public class MinaController {
             model.addAttribute("mapas", mapaDAO.findAll());
             return "vistas/editarMina";
         }
-        mina.setCodMina(id); // Asegura que el ID no se pierda
-        minaDAO.save(mina);
+        Mina minaOriginal = minaDAO.findById(id).orElse(null);
+        if (minaOriginal == null) {
+            return "redirect:/admin/minas";
+        }
+        minaOriginal.setNombre(mina.getNombre());
+        minaOriginal.setDepartamento(mina.getDepartamento());
+        minaOriginal.setMapas(mina.getMapas());
+        minaDAO.save(minaOriginal);
         return "redirect:/admin/minas";
     }
 
     @GetMapping("/eliminar/{id}")
     public String eliminarMina(@PathVariable Long id) {
-        minaDAO.deleteById(id);
+        Mina mina = minaDAO.findById(id).orElse(null);
+        if (mina != null) {
+            if (mina.getUsuarios() != null) {
+                mina.getUsuarios().forEach(usuario -> usuario.setMina(null));
+            }
+            minaDAO.save(mina);
+            minaDAO.deleteById(id);
+        }
         return "redirect:/admin/minas";
     }
 

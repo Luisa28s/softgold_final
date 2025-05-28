@@ -72,8 +72,7 @@ public class Mapa {
 
     @Override
     public String toString() {
-        return "Mapa [codigoMapa=" + codigoMapa + ", coordenadas=" + coordenadas + ", descripcion=" + descripcion
-                + ", minas=" + minas + "]";
+        return "Mapa [codigoMapa=" + codigoMapa + ", coordenadas=" + coordenadas + ", descripcion=" + descripcion + "]";
     }
 
 }
