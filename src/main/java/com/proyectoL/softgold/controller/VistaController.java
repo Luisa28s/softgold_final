@@ -48,6 +48,9 @@ public class VistaController {
             case "minas":
             case "Minas":
                 return "redirect:/minas";
+            case "panel admin":
+            case "panel de administracion":
+                return "redirect:/admin";
             default:
                 redirectAttrs.addFlashAttribute("error", "No se encontró la sección solicitada.");
                 return "redirect:/";

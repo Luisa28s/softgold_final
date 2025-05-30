@@ -142,19 +142,7 @@
                                         </div>
                                     </div>
                                     <!-- Contraseña -->
-                                    <div class="mb-3">
-                                        <label class="form-label">Contraseña <span class="text-danger">*</span></label>
-                                        <div class="input-group">
-                                            <input type="password" th:field="*{passwordPlano}" class="form-control"
-                                                id="passwordPlano" pattern="(?=.*[A-Z])(?=.*\d).{8,20}"
-                                                title="Debe tener al menos 8 caracteres, una letra mayúscula y un número">
-                                            <button class="btn btn-outline-secondary" type="button" id="togglePassword">
-                                                <i class="bi bi-eye"></i>
-                                            </button>
-                                        </div>
-                                        <div class="text-danger" th:if="${#fields.hasErrors('passwordPlano')}"
-                                            th:errors="*{passwordPlano}"></div>
-                                    </div>
+
                                 </div>
                             </div>
                             <!-- Botón Guardar -->

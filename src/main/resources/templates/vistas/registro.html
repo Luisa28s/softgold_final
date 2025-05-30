@@ -10,7 +10,7 @@
 
     <main class="container mt-5">
         <div class="row justify-content-center">
-            <div class="col-md-6">
+            <div class="col-md-10">
                 <div class="card shadow">
                     <div class="card-header text-center">
                         <h4 class="text-secondary">Crear una cuenta</h4>
@@ -34,76 +34,149 @@
                                 </select>
                             </div> -->
 
-                            <div class="mb-3">
-                                <label class="form-label">Tipo de documento</label>
-                                <select class="form-control" th:field="*{tipoDocumento}" required>
-                                    <option value="" disabled selected>Selecciona</option>
-                                    <option value="Cédula de ciudadanía">Cédula de ciudadanía</option>
-                                </select>
+                            <!-- Mostrar errores globales -->
+                            <div th:if="${#fields.hasErrors()}" class="alert alert-danger">
+                                <p>Por favor corrige los errores en el formulario.</p>
                             </div>
 
-                            <div class="mb-3">
-                                <label class="form-label">Tipo de usuario</label>
-                                <select class="form-control" th:field="*{tipoUsuario}" required>
-                                    <option value="" disabled selected>Seleccione</option>
-                                    <option value="MINERO">Minero</option>
-                                    <option value="EMPLEADO">Empleado</option>
-                                </select>
-                                <div class="text-danger" th:if="${#fields.hasErrors('tipoUsuario')}"
-                                    th:errors="*{tipoUsuario}"></div>
-                            </div>
+                            <div class="row">
+                                <!-- Columna 1 -->
 
-                            <div class="mb-3">
-                                <label class="form-label">Número de identificación</label>
-                                <input type="number" th:field="*{id}" class="form-control" required>
-                            </div>
+                                <div class="col-md-6">
+                                    <!-- Tipo de documento -->
 
-                            <div class="mb-3">
-                                <label class="form-label">Primer nombre</label>
-                                <input type="text" th:field="*{nombre1}" class="form-control" required>
-                            </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Tipo de Documento <span
+                                                class="text-danger">*</span></label>
+                                        <select th:field="*{tipoDocumento}" class="form-select" required>
+                                            <option value="" disabled>Selecciona un tipo</option>
+                                            <option value="Cédula de ciudadanía">Cédula de ciudadanía</option>
+                                            <option value="Cédula de extranjería">Cédula de extranjería</option>
+                                            <option value="Pasaporte">Pasaporte</option>
+                                        </select>
+                                        <div th:if="${#fields.hasErrors('tipoDocumento')}" class="text-danger">
+                                            <p th:errors="*{tipoDocumento}"></p>
+                                        </div>
+                                    </div>
+                                    <!-- Cédula -->
+                                    <div class="mb-3">
+                                        <label class="form-label">Cédula <span class="text-danger">*</span></label>
+                                        <input type="text" th:field="*{cedula}" class="form-control" required>
+                                        <div id="errorCedula" class="text-danger"></div>
+                                        <div th:if="${#fields.hasErrors('cedula')}" class="text-danger">
+                                            <p th:errors="*{cedula}"></p>
+                                        </div>
+                                        <div th:if="${errorCedula}" class="text-danger">
+                                            <p th:text="${errorCedula}"></p>
+                                        </div>
+                                    </div>
 
-                            <div class="mb-3">
-                                <label class="form-label">Segundo nombre</label>
-                                <input type="text" th:field="*{nombre2}" class="form-control">
-                            </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Tipo de usuario <span>
+                                                <span class="text-danger">*</span>
+                                            </span></label>
+                                        <select class="form-select" th:field="*{tipoUsuario}" required>
+                                            <option value="" disabled>Seleccione</option>
+                                            <option value="MINERO">Minero</option>
+                                            <option value="EMPLEADO">Empleado</option>
+                                        </select>
+                                        <div class="text-danger" th:if="${#fields.hasErrors('tipoUsuario')}"
+                                            th:errors="*{tipoUsuario}"></div>
+                                    </div>
+                                    <!-- Primer Nombre -->
+                                    <div class="mb-3">
+                                        <label class="form-label">Primer Nombre <span
+                                                class="text-danger">*</span></label>
+                                        <input type="text" th:field="*{nombre1}" class="form-control" required>
+                                        <div id="errorNombre1" class="text-danger"></div>
+                                        <div th:if="${#fields.hasErrors('nombre1')}" class="text-danger">
+                                            <p th:errors="*{nombre1}"></p>
+                                        </div>
+                                    </div>
+                                    <!-- Segundo Nombre -->
+                                    <div class="mb-3">
+                                        <label class="form-label">Segundo Nombre</label>
+                                        <input type="text" th:field="*{nombre2}" class="form-control">
+                                        <div id="errorNombre2" class="text-danger"></div>
+                                    </div>
 
-                            <div class="mb-3">
-                                <label class="form-label">Primer apellido</label>
-                                <input type="text" th:field="*{apellido1}" class="form-control" required>
-                            </div>
+                                    <!-- Primer Apellido -->
+                                    <div class="mb-3">
+                                        <label class="form-label">Primer Apellido <span
+                                                class="text-danger">*</span></label>
+                                        <input type="text" th:field="*{apellido1}" class="form-control" required>
+                                        <div id="errorApellido1" class="text-danger"></div>
+                                        <div th:if="${#fields.hasErrors('apellido1')}" class="text-danger">
+                                            <p th:errors="*{apellido1}"></p>
+                                        </div>
+                                    </div>
 
-                            <div class="mb-3">
-                                <label class="form-label">Segundo apellido</label>
-                                <input type="text" th:field="*{apellido2}" class="form-control">
-                            </div>
-
-                            <div class="mb-3">
-                                <label class="form-label">Correo electrónico</label>
-                                <input type="email" th:field="*{email}" class="form-control" required>
-                                <div class="text-danger" th:if="${#fields.hasErrors('email')}" th:errors="*{email}">
                                 </div>
-                            </div>
 
-
-                            <div class="mb-3">
-                                <label class="form-label">Contraseña</label>
-                                <div class="input-group">
-                                    <input type="password" th:field="*{passwordPlano}" class="form-control"
-                                        id="passwordPlano" pattern="(?=.*[A-Z])(?=.*\d).{8,20}"
-                                        title="Debe tener al menos 8 caracteres, una letra mayúscula y un número"
-                                        required>
-                                    <button class="btn btn-outline-secondary" type="button" id="togglePassword">
-                                        <i class="bi bi-eye"></i>
-                                    </button>
+                                <!-- Columna 2 -->
+                                <div class="col-md-6">
+                                    <!-- Segundo Apellido -->
+                                    <div class="mb-3">
+                                        <label class="form-label">Segundo Apellido</label>
+                                        <input type="text" th:field="*{apellido2}" class="form-control">
+                                        <div id="errorApellido2" class="text-danger"></div>
+                                    </div>
+                                    <!-- Correo Electrónico -->
+                                    <div class="mb-3">
+                                        <label class="form-label">Correo Electrónico <span
+                                                class="text-danger">*</span></label>
+                                        <input type="email" th:field="*{email}" class="form-control" required>
+                                        <div id="errorEmail" class="text-danger"></div>
+                                        <div th:if="${#fields.hasErrors('email')}" class="text-danger">
+                                            <p th:errors="*{email}"></p>
+                                        </div>
+                                        <div th:if="${errorEmail}" class="text-danger">
+                                            <p th:text="${errorEmail}"></p>
+                                        </div>
+                                    </div>
+                                    <!-- Teléfono -->
+                                    <div class="mb-3">
+                                        <label class="form-label">Teléfono <span class="text-danger">*</span></label>
+                                        <input type="text" th:field="*{telefono}" class="form-control" required>
+                                        <div id="errorTelefono" class="text-danger"></div>
+                                        <div th:if="${#fields.hasErrors('telefono')}" class="text-danger">
+                                            <p th:errors="*{telefono}"></p>
+                                        </div>
+                                    </div>
+                                    <!-- Mina en la que trabaja -->
+                                    <div class="mb-3">
+                                        <label class="form-label">Mina en la que trabaja <span
+                                                class="text-danger">*</span></label>
+                                        <select th:field="*{mina}" class="form-select" required>
+                                            <option value="" disabled>Selecciona una mina</option>
+                                            <option th:each="mina : ${minas}" th:value="${mina.codMina}"
+                                                th:text="${mina.nombre}"></option>
+                                        </select>
+                                        <div th:if="${#fields.hasErrors('mina')}" class="text-danger">
+                                            <p th:errors="*{mina}"></p>
+                                        </div>
+                                    </div>
+                                    <!-- Contraseña -->
+                                    <div class="mb-3">
+                                        <label class="form-label">Contraseña <span class="text-danger">*</span></label>
+                                        <div class="input-group">
+                                            <input type="password" th:field="*{passwordPlano}" class="form-control"
+                                                id="passwordPlano" pattern="(?=.*[A-Z])(?=.*\d).{8,20}"
+                                                title="Debe tener al menos 8 caracteres, una letra mayúscula y un número"
+                                                required>
+                                            <button class="btn btn-outline-secondary" type="button" id="togglePassword">
+                                                <i class="bi bi-eye"></i>
+                                            </button>
+                                        </div>
+                                        <div id="errorPassword" class="text-danger"></div>
+                                        <div class="text-danger" th:if="${#fields.hasErrors('passwordPlano')}"
+                                            th:errors="*{passwordPlano}"></div>
+                                    </div>
                                 </div>
-                                <div class="text-danger" th:if="${#fields.hasErrors('passwordPlano')}"
-                                    th:errors="*{passwordPlano}"></div>
+
                             </div>
 
-
-
-                            <div class="d-grid">
+                            <div class="d-grid  ">
                                 <button type="submit" class="btn btn-primary">Registrarse</button>
                             </div>
                         </form>

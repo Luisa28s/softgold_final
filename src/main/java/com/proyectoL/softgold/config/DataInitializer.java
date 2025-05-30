@@ -47,6 +47,12 @@ public class DataInitializer {
             rolEmpleado.setNombre("EMPLEADO");
             rolDAO.save(rolEmpleado);
         }
+        Rol rolUsuario = rolDAO.findByNombre("USUARIO");
+        if (rolUsuario == null) {
+            rolUsuario = new Rol();
+            rolUsuario.setNombre("USUARIO");
+            rolDAO.save(rolUsuario);
+        }
 
         // Crear un usuario administrador si no existe
         Optional<Usuario> adminOpt = usuarioDAO.findByEmail("admin@softgold.com");

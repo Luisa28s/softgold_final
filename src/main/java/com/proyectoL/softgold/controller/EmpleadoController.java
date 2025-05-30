@@ -146,6 +146,7 @@ public class EmpleadoController {
         empleadoExistente.setEmail(usuario.getEmail());
         empleadoExistente.setTelefono(usuario.getTelefono());
         empleadoExistente.setMina(usuario.getMina());
+        empleadoExistente.setArea(usuario.getArea());
 
         if (usuario.getPasswordPlano() != null && !usuario.getPasswordPlano().isEmpty()) {
             empleadoExistente.setPassword(passwordEncoder.encode(usuario.getPasswordPlano()));

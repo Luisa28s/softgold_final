@@ -1,5 +1,6 @@
 package com.proyectoL.softgold.controller;
 
+import com.proyectoL.softgold.repository.MinaDAO;
 import com.proyectoL.softgold.repository.RolDAO;
 import com.proyectoL.softgold.repository.UsuarioDAO;
 import com.proyectoL.softgold.service.PasswordResetService;
@@ -36,6 +37,9 @@ public class LoginController {
     @Autowired
     private RolDAO rolDAO;
 
+    @Autowired
+    private MinaDAO minaDAO;
+
     LoginController(UsuarioDAO usuarioDAO) {
         this.usuarioDAO = usuarioDAO;
     }
@@ -44,12 +48,16 @@ public class LoginController {
     public String mostrarFormularioLogin(
             @RequestParam(value = "error", required = false) String error,
             @RequestParam(value = "logout", required = false) String logout,
+            @RequestParam(value = "registroExitoso", required = false) String registroExitoso,
             Model model) {
         if (error != null) {
             model.addAttribute("error", "Credenciales incorrectas. Inténtalo de nuevo.");
         }
         if (logout != null) {
             model.addAttribute("mensaje", "Has cerrado sesión correctamente.");
+        }
+        if (registroExitoso != null) {
+            model.addAttribute("mensaje", "¡Registro exitoso! Ahora puedes iniciar sesión.");
         }
         return "vistas/login";
     }
@@ -62,6 +70,7 @@ public class LoginController {
     @GetMapping("/registro")
     public String mostrarFormularioRegistro(Model model) {
         model.addAttribute("usuario", new Usuario());
+        model.addAttribute("minas", minaDAO.findAll()); // <-- Aquí agregas las minas
         return "vistas/registro";
     }
 
@@ -71,6 +80,7 @@ public class LoginController {
             Model model) {
 
         if (result.hasErrors()) {
+            model.addAttribute("minas", minaDAO.findAll());
             return "vistas/registro";
         }
 
@@ -82,14 +92,16 @@ public class LoginController {
             }
 
             // Asignar rol genérico "USUARIO"
-            Rol rolUsuario = rolDAO.findByNombre("USUARIO");
-            if (rolUsuario == null) {
-                model.addAttribute("error", "El rol 'USUARIO' no existe en la base de datos.");
+            // Asignar el rol según el tipo de usuario seleccionado en el formulario
+            String tipoUsuario = usuario.getTipoUsuario(); // Debe ser "MINERO", "EMPLEADO", etc.
+            Rol rol = rolDAO.findByNombre(tipoUsuario);
+            if (rol == null) {
+                model.addAttribute("error", "El rol '" + tipoUsuario + "' no existe en la base de datos.");
+                model.addAttribute("minas", minaDAO.findAll());
                 return "vistas/registro";
             }
-
             usuario.setPassword(passwordEncoder.encode(usuario.getPasswordPlano()));
-            usuario.setRoles(Collections.singleton(rolUsuario));
+            usuario.setRoles(Collections.singleton(rol));
             usuario.setBloqueado(false);
             usuario.setIntentosFallidos(0);
 

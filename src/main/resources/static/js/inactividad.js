@@ -9,7 +9,7 @@ function startInactivityTimer() {
     timeout = setTimeout(() => {
         window.location.href = "/login"; 
     }, 15 * 60 * 1000);
-    //5000
+    //5000   15 * 60 * 1000
 }
 
 window.addEventListener("DOMContentLoaded", () => {
